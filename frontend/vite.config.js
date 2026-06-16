@@ -6,9 +6,11 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      "/api": { target: "http://localhost:8000", changeOrigin: true },
-      "/media": { target: "http://localhost:8000", changeOrigin: true },
-      "/ws": { target: "ws://localhost:8000", ws: true },
+      // 127.0.0.1, не localhost: Node резолвит localhost в ::1 (IPv6),
+      // а dev-сервер бэкенда слушает IPv4 — иначе ECONNREFUSED.
+      "/api": { target: "http://127.0.0.1:8000", changeOrigin: true },
+      "/media": { target: "http://127.0.0.1:8000", changeOrigin: true },
+      "/ws": { target: "ws://127.0.0.1:8000", ws: true },
     },
   },
 });
