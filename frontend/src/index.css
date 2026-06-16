@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-background text-text-primary font-sans antialiased;
+    background-image:
+      radial-gradient(circle at 15% 10%, rgba(99, 102, 241, 0.12), transparent 40%),
+      radial-gradient(circle at 85% 20%, rgba(6, 182, 212, 0.1), transparent 40%),
+      radial-gradient(circle at 50% 90%, rgba(139, 92, 246, 0.1), transparent 45%);
+    background-attachment: fixed;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-surface2 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary;
+  }
+}
+
+@layer components {
+  /* Градиентный текст */
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #6366f1, #8b5cf6 45%, #06b6d4);
+  }
+  .gradient-text-warm {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #f59e0b, #ef4444);
+  }
+
+  /* Glassmorphism-карточка */
+  .glass-card {
+    @apply rounded-3xl border border-white/10;
+    background: rgba(26, 26, 46, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  }
+
+  /* Неоновое свечение */
+  .neon-glow {
+    box-shadow:
+      0 0 20px -4px rgba(99, 102, 241, 0.6),
+      0 0 40px -12px rgba(139, 92, 246, 0.5);
+  }
+
+  /* Градиентная кнопка с hover-эффектом */
+  .btn-gradient {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3
+           font-semibold text-white transition-all duration-300;
+    background-image: linear-gradient(135deg, #6366f1, #8b5cf6 50%, #06b6d4);
+    background-size: 200% 200%;
+    background-position: 0% 50%;
+  }
+  .btn-gradient:hover {
+    background-position: 100% 50%;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 10px 30px -6px rgba(99, 102, 241, 0.6);
+  }
+  .btn-gradient:active {
+    transform: translateY(0) scale(0.99);
+  }
+  .btn-gradient:disabled {
+    @apply opacity-50 cursor-not-allowed;
+    transform: none;
+  }
+
+  /* Анимированный градиентный фон hero */
+  .animated-gradient-bg {
+    background: linear-gradient(-45deg, #6366f1, #8b5cf6, #06b6d4, #10b981);
+    background-size: 400% 400%;
+    @apply animate-gradient-shift;
+  }
+
+  /* Blob для фоновых частиц */
+  .blob {
+    @apply absolute rounded-full blur-3xl opacity-30 pointer-events-none;
+    mix-blend-mode: screen;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  /* Тактильный фидбэк для детских кнопок */
+  .tap-shrink {
+    transition: transform 0.08s ease;
+  }
+  .tap-shrink:active {
+    transform: scale(0.92);
+  }
+}
