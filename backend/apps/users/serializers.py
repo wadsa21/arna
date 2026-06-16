@@ -53,6 +53,11 @@ class ArnaTokenObtainPairSerializer(TokenObtainPairSerializer):
         token = super().get_token(user)
         token["role"] = user.role
         token["full_name"] = user.full_name
+        # Имя плана в токене — фронт проверяет доступ без лишнего запроса
+        try:
+            token["plan_name"] = user.subscription.plan.name
+        except Exception:  # noqa: BLE001
+            token["plan_name"] = "FREE"
         return token
 
     def validate(self, attrs):

@@ -7,8 +7,10 @@ import { SkeletonList } from "../../components/ui/Skeleton";
 import MoodChart from "../../components/parent/MoodChart";
 import BehaviorForm from "../../components/parent/BehaviorForm";
 import EmptyChild from "../../components/parent/EmptyChild";
+import UpgradePrompt from "../../components/billing/UpgradePrompt";
 import { useChildren, toList } from "../../hooks/useChildren";
 import { behaviorApi } from "../../services/api";
+import { useSubscriptionStore } from "../../store/subscriptionStore";
 
 const MOOD_EMOJI = { 1: "😣", 2: "🙁", 3: "😐", 4: "🙂", 5: "😄" };
 
@@ -16,15 +18,27 @@ export default function BehaviorPage() {
   const { t } = useTranslation();
   const { selectedChild, children, isLoading: childrenLoading } = useChildren();
   const childId = selectedChild?.id;
+  const isFeatureAvailable = useSubscriptionStore((s) => s.isFeatureAvailable);
+  const hasBehavior = isFeatureAvailable("has_behavior_log");
 
   const logsQuery = useQuery({
     queryKey: ["behavior", childId],
-    enabled: !!childId,
+    enabled: !!childId && hasBehavior,
     queryFn: async () =>
       toList((await behaviorApi.list({ child: childId, ordering: "date" })).data),
   });
 
   if (!childrenLoading && children.length === 0) return <EmptyChild />;
+
+  // Дневник поведения — фича платных тарифов
+  if (!hasBehavior) {
+    return (
+      <div className="mx-auto max-w-2xl space-y-6">
+        <h1 className="text-3xl font-extrabold gradient-text">{t("behavior.title")}</h1>
+        <UpgradePrompt requiredPlan="OTBASY" />
+      </div>
+    );
+  }
 
   const logs = logsQuery.data ?? [];
   const monthData = logs.slice(-30).map((l) => ({ date: l.date, mood: l.mood }));

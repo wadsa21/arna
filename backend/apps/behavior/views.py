@@ -1,6 +1,7 @@
 from rest_framework import permissions, viewsets
 
 from apps.common.permissions import IsParent
+from apps.billing.permissions import RequirePlanFeature
 from kafka.producer import publish_behavior_logged
 
 from .models import BehaviorLog
@@ -9,7 +10,12 @@ from .serializers import BehaviorLogSerializer
 
 class BehaviorLogViewSet(viewsets.ModelViewSet):
     serializer_class = BehaviorLogSerializer
-    permission_classes = [permissions.IsAuthenticated, IsParent]
+    # Дневник поведения — фича платных тарифов (has_behavior_log)
+    permission_classes = [
+        permissions.IsAuthenticated,
+        IsParent,
+        RequirePlanFeature.for_("has_behavior_log"),
+    ]
     filterset_fields = ["child", "date", "mood"]
     ordering_fields = ["date", "created_at", "mood"]
 

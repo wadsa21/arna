@@ -14,6 +14,7 @@ api_patterns = [
     path("", include("apps.cards.urls")),
     path("", include("apps.behavior.urls")),
     path("", include("apps.notifications.urls")),
+    path("", include("apps.billing.urls")),
 ]
 
 urlpatterns = [

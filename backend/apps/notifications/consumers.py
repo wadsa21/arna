@@ -7,14 +7,26 @@ WebSocket-консьюмер для реалтайм-уведомлений.
 """
 import json
 
+from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
 
 
 class NotificationConsumer(AsyncWebsocketConsumer):
+    @database_sync_to_async
+    def _has_realtime(self, user):
+        from apps.billing.services import get_subscription
+
+        sub = get_subscription(user)
+        return bool(sub.is_active and sub.plan and sub.plan.has_realtime)
+
     async def connect(self):
         user = self.scope.get("user")
         if user is None or not user.is_authenticated:
             await self.close(code=4001)
+            return
+        # Реалтайм-уведомления — фича платных тарифов (has_realtime)
+        if not await self._has_realtime(user):
+            await self.close(code=4003)  # upgrade required
             return
         self.group_name = f"user_{user.id}"
         await self.channel_layer.group_add(self.group_name, self.channel_name)

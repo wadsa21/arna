@@ -32,6 +32,23 @@ class ScheduleViewSet(viewsets.ModelViewSet):
         return qs.filter(child__parent=user) if user.is_parent else qs
 
     def perform_create(self, serializer):
+        # FREE-тариф: расписание можно создавать только на сегодня
+        from django.utils import timezone
+
+        from apps.billing.services import UpgradeRequired, get_subscription
+
+        target_date = serializer.validated_data.get("date")
+        sub = get_subscription(self.request.user)
+        if (
+            target_date
+            and target_date != timezone.localdate()
+            and not sub.plan.schedule_any_date
+        ):
+            raise UpgradeRequired(
+                message="На бесплатном тарифе расписание доступно только на сегодня.",
+                current_plan=sub.plan.name,
+                required_plan="OTBASY",
+            )
         serializer.save(created_by=self.request.user)
 
     @action(detail=True, methods=["get", "post"])

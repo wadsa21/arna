@@ -7,6 +7,10 @@ import {
   NotebookPen,
   Zap,
   ArrowRight,
+  Building2,
+  BarChart3,
+  Cable,
+  Mail,
 } from "lucide-react";
 
 import AnimatedBackground from "../components/ui/AnimatedBackground";
@@ -65,6 +69,12 @@ export default function Landing() {
           </span>
         </div>
         <div className="flex items-center gap-3">
+          <Link
+            to="/pricing"
+            className="hidden text-sm font-semibold text-text-secondary hover:text-text-primary sm:block"
+          >
+            {t("billing.pricing_nav")}
+          </Link>
           <LanguageSwitcher />
           <Link to="/login">
             <Button variant="ghost" className="!px-4 !py-2">
@@ -188,6 +198,51 @@ export default function Landing() {
             delay={0.3}
           />
         </div>
+      </section>
+
+      {/* B2B / Enterprise секция */}
+      <section className="mx-auto max-w-6xl px-5 py-16 lg:px-12">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="glass-card relative overflow-hidden p-8 lg:p-12"
+        >
+          <div className="animated-gradient-bg absolute inset-0 -z-10 opacity-10" />
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
+            <div>
+              <span className="inline-flex items-center gap-2 rounded-full border border-accent3/30 bg-accent3/10 px-4 py-1.5 text-sm font-semibold text-accent3">
+                <Building2 className="h-4 w-4" /> Enterprise
+              </span>
+              <h2 className="mt-4 text-3xl font-black text-balance lg:text-4xl">
+                <span className="gradient-text">{t("billing.b2b_title")}</span>
+              </h2>
+              <p className="mt-4 max-w-md text-text-secondary">
+                {t("billing.b2b_subtitle")}
+              </p>
+              <a href="mailto:b2b@arna.kz?subject=Enterprise%20Арна" className="btn-gradient mt-6 inline-flex">
+                <Mail className="h-5 w-5" /> {t("billing.b2b_cta")}
+              </a>
+            </div>
+            <div className="space-y-4">
+              {[
+                { icon: BarChart3, title: t("billing.b2b_1_title"), desc: t("billing.b2b_1_desc") },
+                { icon: Building2, title: t("billing.b2b_2_title"), desc: t("billing.b2b_2_desc") },
+                { icon: Cable, title: t("billing.b2b_3_title"), desc: t("billing.b2b_3_desc") },
+              ].map(({ icon: Icon, title, desc }) => (
+                <div key={title} className="flex gap-4 rounded-2xl bg-surface2/50 p-4">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-brand text-white">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <p className="font-bold">{title}</p>
+                    <p className="text-sm text-text-secondary">{desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
       </section>
 
       <footer className="py-10 text-center text-sm text-text-secondary">

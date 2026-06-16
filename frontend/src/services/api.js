@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useAuthStore } from "../store/authStore";
+import { useSubscriptionStore } from "../store/subscriptionStore";
 
 const api = axios.create({
   baseURL: "/api",
@@ -43,6 +44,17 @@ api.interceptors.response.use(
         return Promise.reject(e);
       }
     }
+
+    // Лимит/фича тарифа превышены — открываем глобальную модалку апгрейда
+    const data = error.response?.data;
+    if (error.response?.status === 403 && data?.error === "upgrade_required") {
+      useSubscriptionStore.getState().openUpgrade({
+        requiredPlan: data.required_plan,
+        currentPlan: data.current_plan,
+        message: data.detail,
+      });
+    }
+
     return Promise.reject(error);
   }
 );
@@ -98,4 +110,16 @@ export const notificationsApi = {
   list: () => api.get("/notifications/"),
   unreadCount: () => api.get("/notifications/unread_count/"),
   markRead: (id) => api.patch(`/notifications/${id}/read/`),
+};
+
+export const billingApi = {
+  plans: () => api.get("/plans/"),
+  subscription: () => api.get("/subscription/"),
+  upgrade: (payload) => api.post("/subscription/upgrade/", payload),
+  cancel: () => api.post("/subscription/cancel/"),
+  history: () => api.get("/subscription/history/"),
+  initiatePayment: (payload) => api.post("/payments/initiate/", payload),
+  myReferral: () => api.get("/referral/my-code/"),
+  referralStats: () => api.get("/referral/stats/"),
+  validateReferral: (code) => api.post("/referral/validate/", { code }),
 };

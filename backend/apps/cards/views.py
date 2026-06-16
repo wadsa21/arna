@@ -2,6 +2,8 @@ from rest_framework import permissions, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
+from apps.billing.services import enforce_card_limit
+
 from .models import CommunicationCard
 from .serializers import CommunicationCardSerializer
 
@@ -21,6 +23,7 @@ class CommunicationCardViewSet(viewsets.ModelViewSet):
         return qs
 
     def perform_create(self, serializer):
+        enforce_card_limit(self.request.user)
         serializer.save(created_by=self.request.user)
 
     @action(detail=False, methods=["get"])

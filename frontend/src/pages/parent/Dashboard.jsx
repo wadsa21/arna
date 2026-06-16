@@ -10,9 +10,11 @@ import Badge from "../../components/ui/Badge";
 import { SkeletonList } from "../../components/ui/Skeleton";
 import MoodChart from "../../components/parent/MoodChart";
 import EmptyChild from "../../components/parent/EmptyChild";
+import UsageMeter from "../../components/billing/UsageMeter";
 import { useChildren, toList } from "../../hooks/useChildren";
 import { scheduleApi, behaviorApi } from "../../services/api";
 import { useAuthStore } from "../../store/authStore";
+import { useSubscriptionStore } from "../../store/subscriptionStore";
 
 const today = () => new Date().toISOString().slice(0, 10);
 const MOOD_EMOJI = { 1: "😣", 2: "🙁", 3: "😐", 4: "🙂", 5: "😄" };
@@ -21,6 +23,7 @@ export default function Dashboard() {
   const { t, i18n } = useTranslation();
   const lang = i18n.resolvedLanguage;
   const user = useAuthStore((s) => s.user);
+  const subscription = useSubscriptionStore((s) => s.subscription);
   const { selectedChild, isLoading: childrenLoading, children } = useChildren();
   const childId = selectedChild?.id;
 
@@ -127,6 +130,32 @@ export default function Dashboard() {
           </div>
         </Card>
       </div>
+
+      {/* Использование лимитов тарифа */}
+      {subscription && (
+        <Card>
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="text-lg font-bold">{t("billing.sub_title")}</h2>
+            <Link to="/settings/subscription">
+              <Button variant="soft">{t("common.edit")}</Button>
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            <UsageMeter
+              label={t("billing.usage_children")}
+              used={subscription.usage.children}
+              limit={subscription.plan.max_children}
+              icon={<Baby className="h-4 w-4" />}
+            />
+            <UsageMeter
+              label={t("billing.usage_cards")}
+              used={subscription.usage.cards}
+              limit={subscription.plan.max_cards}
+              icon="🗣️"
+            />
+          </div>
+        </Card>
+      )}
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Today schedule */}

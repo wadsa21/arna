@@ -1,10 +1,12 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { LogOut, ChevronDown } from "lucide-react";
 import LanguageSwitcher from "../ui/LanguageSwitcher";
 import NotificationBell from "./NotificationBell";
+import PlanBadge from "../billing/PlanBadge";
 import { useAuthStore } from "../../store/authStore";
 import { useUIStore } from "../../store/uiStore";
+import { useSubscriptionStore } from "../../store/subscriptionStore";
 
 export default function Header({ children = [], selectedChildId }) {
   const { t } = useTranslation();
@@ -12,6 +14,7 @@ export default function Header({ children = [], selectedChildId }) {
   const user = useAuthStore((s) => s.user);
   const logout = useAuthStore((s) => s.logout);
   const setSelectedChild = useUIStore((s) => s.setSelectedChild);
+  const currentPlan = useSubscriptionStore((s) => s.currentPlan);
 
   const handleLogout = () => {
     logout();
@@ -43,6 +46,9 @@ export default function Header({ children = [], selectedChildId }) {
       )}
 
       <div className="ml-auto flex items-center gap-2 sm:gap-3">
+        <Link to="/settings/subscription" className="hidden sm:block">
+          <PlanBadge plan={currentPlan} />
+        </Link>
         <LanguageSwitcher />
         <NotificationBell />
         <div className="hidden sm:flex items-center gap-2 rounded-2xl border border-white/10 bg-surface2/60 py-1.5 pl-3 pr-1.5">

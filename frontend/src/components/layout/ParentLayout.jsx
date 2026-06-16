@@ -1,16 +1,24 @@
+import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import MobileNav from "./MobileNav";
 import AnimatedBackground from "../ui/AnimatedBackground";
+import UpgradeModal from "../billing/UpgradeModal";
 import { useChildren } from "../../hooks/useChildren";
 import { useNotificationsSocket } from "../../hooks/useNotificationsSocket";
+import { useSubscriptionStore } from "../../store/subscriptionStore";
 
 export default function ParentLayout() {
   const { children, selectedChildId } = useChildren();
   const location = useLocation();
+  const fetchSubscription = useSubscriptionStore((s) => s.fetchSubscription);
   useNotificationsSocket(); // реалтайм-уведомления через WebSocket
+
+  useEffect(() => {
+    fetchSubscription();
+  }, [fetchSubscription]);
 
   return (
     <div className="min-h-screen flex">
@@ -29,6 +37,7 @@ export default function ParentLayout() {
         </motion.main>
       </div>
       <MobileNav />
+      <UpgradeModal />
     </div>
   );
 }

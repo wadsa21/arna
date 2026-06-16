@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 
 from apps.common.permissions import IsParent
+from apps.billing.services import enforce_child_limit
 
 from .models import ChildProfile
 from .serializers import ChildProfileSerializer
@@ -18,4 +19,6 @@ class ChildProfileViewSet(viewsets.ModelViewSet):
         return qs
 
     def perform_create(self, serializer):
+        # Проверка лимита тарифа (бросит 403 upgrade_required при превышении)
+        enforce_child_limit(self.request.user)
         serializer.save(parent=self.request.user)
