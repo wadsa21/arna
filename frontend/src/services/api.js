@@ -104,6 +104,8 @@ export const cardsApi = {
 export const behaviorApi = {
   list: (params) => api.get("/behavior-logs/", { params }),
   create: (payload) => api.post("/behavior-logs/", payload),
+  insights: (childId) =>
+    api.get("/behavior-logs/insights/", { params: { child: childId } }),
 };
 
 export const notificationsApi = {

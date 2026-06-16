@@ -117,14 +117,34 @@ class ScheduleItemViewSet(viewsets.ModelViewSet):
     def complete(self, request, pk=None):
         """
         Ребёнок нажимает «Готово!».
-        Помечаем активность выполненной и публикуем событие в Kafka,
-        откуда родителю улетит реалтайм-уведомление.
+        Помечаем активность выполненной, уведомляем родителя в реальном
+        времени (синхронно — работает всегда) и публикуем событие в Kafka
+        для аналитики/ИИ (асинхронный поток).
         """
+        from apps.billing.services import get_subscription
+        from apps.notifications.models import Notification
+        from apps.notifications.services import notify
+
         item = self.get_object()
         item.mark_done()
 
+        child = item.schedule.child
+        parent = child.parent
+        title = item.title_ru or item.title_kk
+
+        # Реалтайм-уведомление родителю — только если тариф поддерживает
+        if get_subscription(parent).plan.has_realtime:
+            notify(
+                parent,
+                title="Активность завершена 🎉",
+                body=f"{child.name} завершил(а): «{title}»",
+                type=Notification.Type.SCHEDULE_DONE,
+                data={"child_id": str(child.id), "item_id": str(item.id)},
+            )
+
+        # Событие в Kafka — для аналитики и будущего ИИ (consumer не обязателен)
         publish_schedule_completed(
-            child_id=item.schedule.child_id,
+            child_id=child.id,
             item_id=item.id,
             completed_at=item.completed_at.isoformat()
             if item.completed_at

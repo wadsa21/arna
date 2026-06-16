@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
@@ -8,30 +8,52 @@ import Button from "../ui/Button";
 import { Input, Textarea, Select } from "../ui/Input";
 import { childrenApi } from "../../services/api";
 
-export default function ChildForm({ open, onClose }) {
+const EMPTY = { name: "", age: "", communication_level: "MEDIUM", notes: "" };
+
+export default function ChildForm({ open, onClose, child = null }) {
   const { t } = useTranslation();
   const qc = useQueryClient();
-  const [form, setForm] = useState({
-    name: "",
-    age: "",
-    communication_level: "MEDIUM",
-    notes: "",
-  });
+  const isEdit = !!child;
+  const [form, setForm] = useState(EMPTY);
+
+  // Префилл при открытии в режиме редактирования
+  useEffect(() => {
+    if (open) {
+      setForm(
+        child
+          ? {
+              name: child.name || "",
+              age: child.age ?? "",
+              communication_level: child.communication_level || "MEDIUM",
+              notes: child.notes || "",
+            }
+          : EMPTY
+      );
+    }
+  }, [open, child]);
 
   const mutation = useMutation({
-    mutationFn: () =>
-      childrenApi.create({ ...form, age: form.age ? Number(form.age) : null }),
+    mutationFn: () => {
+      const payload = { ...form, age: form.age ? Number(form.age) : null };
+      return isEdit
+        ? childrenApi.update(child.id, payload)
+        : childrenApi.create(payload);
+    },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["children"] });
-      toast.success(t("toast.created"));
+      toast.success(isEdit ? t("toast.saved") : t("toast.created"));
       onClose();
-      setForm({ name: "", age: "", communication_level: "MEDIUM", notes: "" });
+      setForm(EMPTY);
     },
     onError: () => toast.error(t("toast.error")),
   });
 
   return (
-    <Modal open={open} onClose={onClose} title={t("children.add_title")}>
+    <Modal
+      open={open}
+      onClose={onClose}
+      title={isEdit ? t("common.edit") : t("children.add_title")}
+    >
       <form
         onSubmit={(e) => {
           e.preventDefault();
