@@ -27,10 +27,10 @@ const DEMO_SCHEDULE = [
 ];
 
 const TONE_CLASS = {
-  primary: "bg-primary/15 text-primary",
-  accent1: "bg-accent1/15 text-accent1",
-  accent2: "bg-accent2/15 text-accent2",
-  accent3: "bg-accent3/15 text-accent3",
+  primary: "border border-white/10 bg-white/5 text-text-primary",
+  accent1: "border border-white/10 bg-white/5 text-text-primary",
+  accent2: "border border-white/10 bg-white/5 text-text-primary",
+  accent3: "border border-white/10 bg-white/5 text-text-primary",
 };
 
 function Feature({ icon: Icon, title, desc, tone, delay }) {
@@ -88,9 +88,7 @@ export default function Landing() {
           transition={{ duration: 0.6 }}
           className="relative"
         >
-          {/* Мягкое свечение за заголовком */}
-          <div className="pointer-events-none absolute -left-20 -top-24 h-72 w-72 rounded-full bg-primary/30 blur-[100px]" />
-          <span className="relative inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-sm font-semibold text-primary backdrop-blur-sm">
+          <span className="relative inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.04] px-4 py-1.5 text-sm font-semibold text-text-primary backdrop-blur-sm">
             <Zap className="h-4 w-4" /> {t("landing.made_with")}
           </span>
           <h1 className="relative mt-5 text-5xl font-black leading-[1.05] text-balance lg:text-7xl">
@@ -136,7 +134,7 @@ export default function Landing() {
                   <span className="text-2xl">{it.e}</span>
                   <span className="font-semibold">{it.t}</span>
                   {i === 0 && (
-                    <span className="ml-auto rounded-full bg-accent2/20 px-3 py-1 text-xs font-bold text-accent2">
+                    <span className="ml-auto rounded-full bg-white px-3 py-1 text-xs font-bold text-black">
                       ✓
                     </span>
                   )}
@@ -145,17 +143,11 @@ export default function Landing() {
             </div>
             {/* Mini cards */}
             <div className="grid grid-cols-3 gap-2">
-              {DEMO_CARDS.map((e, i) => (
+              {DEMO_CARDS.map((e) => (
                 <motion.div
                   key={e}
                   whileHover={{ scale: 1.1, rotate: 3 }}
-                  className="flex aspect-square items-center justify-center rounded-2xl bg-gradient-to-br from-surface2 to-surface text-3xl"
-                  style={{
-                    boxShadow:
-                      i % 2 === 0
-                        ? "0 0 20px -6px rgba(99,102,241,0.5)"
-                        : "0 0 20px -6px rgba(6,182,212,0.5)",
-                  }}
+                  className="flex aspect-square items-center justify-center rounded-2xl border border-white/10 bg-black/40 text-3xl shadow-glass"
                 >
                   {e}
                 </motion.div>
@@ -207,10 +199,10 @@ export default function Landing() {
           viewport={{ once: true }}
           className="glass-card relative overflow-hidden p-8 lg:p-12"
         >
-          <div className="animated-gradient-bg absolute inset-0 -z-10 opacity-10" />
+          <div className="absolute inset-0 -z-10 bg-white/[0.03]" />
           <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
             <div>
-              <span className="inline-flex items-center gap-2 rounded-full border border-accent3/30 bg-accent3/10 px-4 py-1.5 text-sm font-semibold text-accent3">
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.04] px-4 py-1.5 text-sm font-semibold text-text-primary">
                 <Building2 className="h-4 w-4" /> Enterprise
               </span>
               <h2 className="mt-4 text-3xl font-black text-balance lg:text-4xl">
@@ -229,8 +221,8 @@ export default function Landing() {
                 { icon: Building2, title: t("billing.b2b_2_title"), desc: t("billing.b2b_2_desc") },
                 { icon: Cable, title: t("billing.b2b_3_title"), desc: t("billing.b2b_3_desc") },
               ].map(({ icon: Icon, title, desc }) => (
-                <div key={title} className="flex gap-4 rounded-2xl bg-surface2/50 p-4">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-brand text-white">
+                <div key={title} className="flex gap-4 rounded-2xl border border-white/10 bg-black/30 p-4">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-black">
                     <Icon className="h-5 w-5" />
                   </div>
                   <div>

@@ -23,10 +23,10 @@ export default function Modal({ open, onClose, title, children, maxWidth = "max-
             transition={{ type: "spring", damping: 22, stiffness: 280 }}
           >
             <div className="flex items-center justify-between mb-5">
-              <h3 className="text-xl font-bold gradient-text">{title}</h3>
+              <h3 className="text-xl font-bold text-text-primary">{title}</h3>
               <button
                 onClick={onClose}
-                className="rounded-full p-2 hover:bg-white/10 transition-colors"
+                className="rounded-full p-2 transition-colors hover:bg-white/10"
               >
                 <X className="w-5 h-5 text-text-secondary" />
               </button>

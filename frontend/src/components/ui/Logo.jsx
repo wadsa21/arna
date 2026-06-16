@@ -1,9 +1,5 @@
 import { useTranslation } from "react-i18next";
 
-/**
- * Фирменный знак «Арна» — волна-сигнал (канал связи) в градиентном тайле.
- * Заменяет эмодзи-логотип. size — сторона тайла в px.
- */
 export default function Logo({ size = 40, showWord = true, className = "" }) {
   const { t } = useTranslation();
   return (
@@ -13,8 +9,8 @@ export default function Logo({ size = 40, showWord = true, className = "" }) {
         style={{
           width: size,
           height: size,
-          background: "linear-gradient(135deg,#6366F1 0%,#8B5CF6 50%,#06B6D4 100%)",
-          boxShadow: "0 6px 20px -6px rgba(99,102,241,0.7), inset 0 1px 0 rgba(255,255,255,0.35)",
+          background: "#F5F5F5",
+          boxShadow: "0 18px 36px -28px rgba(255,255,255,0.75), inset 0 0 0 1px rgba(0,0,0,0.08)",
         }}
       >
         <svg
@@ -26,7 +22,7 @@ export default function Logo({ size = 40, showWord = true, className = "" }) {
         >
           <path
             d="M10 40 Q26 8 32 32 Q38 56 54 24"
-            stroke="white"
+            stroke="black"
             strokeWidth="6"
             strokeLinecap="round"
             opacity="0.95"
@@ -34,7 +30,7 @@ export default function Logo({ size = 40, showWord = true, className = "" }) {
         </svg>
       </span>
       {showWord && (
-        <span className="text-xl font-extrabold gradient-text tracking-tight">
+        <span className="text-xl font-extrabold gradient-text">
           {t("brand")}
         </span>
       )}

@@ -6,7 +6,6 @@ import Button from "../ui/Button";
 import { useSubscriptionStore } from "../../store/subscriptionStore";
 import { PLAN_ICON, PLAN_GRADIENTS } from "./planFeatures";
 
-/** Глобальная модалка апгрейда — открывается автоматически при 403 upgrade_required. */
 export default function UpgradeModal() {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -30,7 +29,7 @@ export default function UpgradeModal() {
     <Modal open={upgrade.open} onClose={close} title="">
       <div className="flex flex-col items-center gap-4 text-center">
         <div
-          className={`flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br ${PLAN_GRADIENTS[plan]} text-white shadow-neon-primary`}
+          className={`flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br ${PLAN_GRADIENTS[plan]} text-black shadow-neon-primary`}
         >
           <Icon className="h-10 w-10" />
         </div>

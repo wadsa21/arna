@@ -74,7 +74,7 @@ export default function SubscriptionSettings() {
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="flex items-center gap-4">
             <div
-              className={`flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br ${PLAN_GRADIENTS[plan.name]} text-white shadow-neon-primary`}
+              className={`flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br ${PLAN_GRADIENTS[plan.name]} text-black shadow-neon-primary`}
             >
               {(() => {
                 const Icon = PLAN_ICON[plan.name] || PLAN_ICON.FREE;
@@ -126,15 +126,15 @@ export default function SubscriptionSettings() {
       {/* Реферальная программа */}
       <Card>
         <div className="mb-4 flex items-center gap-2">
-          <Gift className="h-5 w-5 text-secondary" />
+          <Gift className="h-5 w-5 text-text-secondary" />
           <h2 className="text-lg font-bold">{t("billing.referral_section")}</h2>
         </div>
         {referralQuery.isLoading ? (
           <SkeletonList count={1} itemClass="h-16" />
         ) : (
           <div className="flex flex-wrap items-center gap-4">
-            <div className="flex items-center gap-2 rounded-2xl border border-primary/30 bg-primary/10 px-4 py-3">
-              <span className="font-mono text-lg font-bold tracking-wider text-primary">
+            <div className="flex items-center gap-2 rounded-2xl border border-white/20 bg-black/30 px-4 py-3">
+              <span className="font-mono text-lg font-bold tracking-wider text-text-primary">
                 {referralQuery.data?.code}
               </span>
               <button onClick={copyCode} className="rounded-lg p-1.5 hover:bg-white/10">

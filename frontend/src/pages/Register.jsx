@@ -101,7 +101,7 @@ export default function Register() {
 
         <p className="mt-6 text-center text-sm text-text-secondary">
           {t("auth.have_account")}{" "}
-          <Link to="/login" className="font-semibold text-primary hover:underline">
+          <Link to="/login" className="font-semibold text-text-primary hover:underline">
             {t("common.login")}
           </Link>
         </p>

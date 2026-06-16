@@ -39,10 +39,10 @@ export function planFeatureRows(plan, t) {
 import { Sparkles, Home, Crown, Building2 } from "lucide-react";
 
 export const PLAN_GRADIENTS = {
-  FREE: "from-slate-500 to-slate-600",
-  OTBASY: "from-primary to-accent1",
-  PRO: "from-primary via-secondary to-accent1",
-  ENTERPRISE: "from-accent3 to-accent4",
+  FREE: "from-white to-neutral-400",
+  OTBASY: "from-white to-neutral-300",
+  PRO: "from-white via-neutral-300 to-neutral-500",
+  ENTERPRISE: "from-white to-neutral-500",
 };
 
 /** Иконки тарифов (Lucide) вместо эмодзи. */

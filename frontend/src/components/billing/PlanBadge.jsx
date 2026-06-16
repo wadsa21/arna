@@ -3,9 +3,9 @@ import { useTranslation } from "react-i18next";
 
 const STYLES = {
   FREE: "bg-white/5 text-text-secondary border-white/10",
-  OTBASY: "bg-gradient-to-r from-primary to-accent1 text-white border-transparent shadow-neon-primary",
-  PRO: "bg-gradient-to-r from-primary via-secondary to-accent1 text-white border-transparent shadow-neon-secondary",
-  ENTERPRISE: "bg-gradient-to-r from-accent3 to-accent4 text-white border-transparent",
+  OTBASY: "bg-white text-black border-white shadow-neon-primary",
+  PRO: "bg-white text-black border-white shadow-neon-secondary",
+  ENTERPRISE: "bg-white text-black border-white",
 };
 
 /** Маленький бейдж текущего плана — для хедера. */

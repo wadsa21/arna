@@ -8,7 +8,7 @@ import { scheduleApi } from "../../services/api";
 import { useSound } from "../../hooks/useSound";
 
 const fireConfetti = () => {
-  const colors = ["#6366F1", "#8B5CF6", "#06B6D4", "#10B981", "#F59E0B"];
+  const colors = ["#FFFFFF", "#D4D4D4", "#A3A3A3", "#737373"];
   confetti({ particleCount: 120, spread: 90, origin: { y: 0.6 }, colors });
   setTimeout(
     () => confetti({ particleCount: 80, angle: 60, spread: 70, origin: { x: 0 }, colors }),
@@ -83,8 +83,8 @@ export default function ChildSchedule({ schedule, childId, date }) {
               transition={
                 celebrating ? { duration: 0.8 } : { repeat: Infinity, duration: 3 }
               }
-              className="flex h-52 w-52 items-center justify-center rounded-[2.5rem] bg-gradient-to-br from-primary via-secondary to-accent1 text-9xl shadow-2xl"
-              style={{ boxShadow: "0 20px 60px -10px rgba(139,92,246,0.7)" }}
+              className="flex h-52 w-52 items-center justify-center rounded-3xl border border-white/20 bg-white text-9xl shadow-2xl"
+              style={{ boxShadow: "0 20px 64px -34px rgba(255,255,255,0.8)" }}
             >
               {current.emoji}
             </motion.div>
@@ -97,8 +97,8 @@ export default function ChildSchedule({ schedule, childId, date }) {
               whileHover={{ scale: 1.05 }}
               onClick={() => completeMutation.mutate(current)}
               disabled={completeMutation.isPending}
-              className="flex items-center gap-3 rounded-[2rem] bg-gradient-to-r from-accent2 to-accent1 px-12 py-7 text-3xl font-black text-white"
-              style={{ boxShadow: "0 16px 50px -8px rgba(16,185,129,0.7)" }}
+              className="flex items-center gap-3 rounded-3xl bg-white px-12 py-7 text-3xl font-black text-black"
+              style={{ boxShadow: "0 18px 58px -32px rgba(255,255,255,0.75)" }}
             >
               ✋ {t("common.done")}
             </motion.button>
@@ -113,10 +113,10 @@ export default function ChildSchedule({ schedule, childId, date }) {
             key={it.id}
             className={`flex h-16 w-16 items-center justify-center rounded-2xl text-3xl transition-all ${
               it.status === "DONE"
-                ? "bg-accent2/20 ring-2 ring-accent2"
+                ? "bg-white text-black ring-2 ring-white"
                 : it.id === current?.id
-                  ? "bg-primary/20 ring-2 ring-primary scale-110"
-                  : "bg-surface2/60 opacity-60"
+                  ? "scale-110 bg-white/20 ring-2 ring-white"
+                  : "bg-black/40 opacity-60"
             }`}
           >
             {it.status === "DONE" ? "✅" : it.emoji}

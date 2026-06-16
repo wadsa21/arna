@@ -92,7 +92,7 @@ export default function Login() {
 
         <p className="mt-6 text-center text-sm text-text-secondary">
           {t("auth.no_account")}{" "}
-          <Link to="/register" className="font-semibold text-primary hover:underline">
+          <Link to="/register" className="font-semibold text-text-primary hover:underline">
             {t("common.register")}
           </Link>
         </p>

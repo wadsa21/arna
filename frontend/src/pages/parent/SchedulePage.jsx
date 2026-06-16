@@ -32,7 +32,7 @@ function ScheduleRow({ item, lang, t, onStatus, onDelete }) {
       value={item}
       dragListener={false}
       dragControls={controls}
-      className="flex items-center gap-3 rounded-2xl border border-white/10 bg-surface2/60 p-3"
+      className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/30 p-3"
     >
       <button
         onPointerDown={(e) => controls.start(e)}
@@ -53,7 +53,7 @@ function ScheduleRow({ item, lang, t, onStatus, onDelete }) {
       <select
         value={item.status}
         onChange={(e) => onStatus(item, e.target.value)}
-        className="rounded-xl border border-white/10 bg-surface px-2 py-1 text-xs font-semibold outline-none"
+        className="rounded-xl border border-white/10 bg-black/40 px-2 py-1 text-xs font-semibold outline-none focus:border-white/60"
       >
         {["PENDING", "IN_PROGRESS", "DONE", "SKIPPED"].map((s) => (
           <option key={s} value={s}>
@@ -66,7 +66,7 @@ function ScheduleRow({ item, lang, t, onStatus, onDelete }) {
       </Badge>
       <button
         onClick={() => onDelete(item)}
-        className="rounded-xl p-2 text-text-secondary hover:bg-accent4/20 hover:text-accent4"
+        className="rounded-xl p-2 text-text-secondary hover:bg-white hover:text-black"
       >
         <Trash2 className="h-4 w-4" />
       </button>

@@ -73,7 +73,7 @@ export default function BehaviorPage() {
                 key={l.id}
                 initial={{ opacity: 0, x: -8 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="flex gap-4 rounded-2xl border border-white/10 bg-surface2/50 p-4"
+                className="flex gap-4 rounded-2xl border border-white/10 bg-black/30 p-4"
               >
                 <div className="flex flex-col items-center">
                   <span className="text-4xl">{MOOD_EMOJI[l.mood]}</span>
@@ -82,13 +82,13 @@ export default function BehaviorPage() {
                 <div className="min-w-0 flex-1 space-y-1.5">
                   {l.positive_moments && (
                     <p className="text-sm">
-                      <span className="font-semibold text-accent2">+ </span>
+                      <span className="font-semibold text-text-primary">+ </span>
                       {l.positive_moments}
                     </p>
                   )}
                   {l.triggers && (
                     <p className="text-sm">
-                      <span className="font-semibold text-accent3">⚡ </span>
+                      <span className="font-semibold text-text-secondary">⚡ </span>
                       {l.triggers}
                     </p>
                   )}

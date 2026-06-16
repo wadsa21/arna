@@ -22,8 +22,8 @@ export default function MoodChart({ data }) {
       <AreaChart data={chartData} margin={{ top: 10, right: 8, left: -20, bottom: 0 }}>
         <defs>
           <linearGradient id="moodGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#8B5CF6" stopOpacity={0.7} />
-            <stop offset="100%" stopColor="#06B6D4" stopOpacity={0.05} />
+            <stop offset="0%" stopColor="#FFFFFF" stopOpacity={0.55} />
+            <stop offset="100%" stopColor="#A3A3A3" stopOpacity={0.04} />
           </linearGradient>
         </defs>
         <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
@@ -44,20 +44,20 @@ export default function MoodChart({ data }) {
         />
         <Tooltip
           contentStyle={{
-            background: "rgba(26,26,46,0.95)",
-            border: "1px solid rgba(255,255,255,0.1)",
-            borderRadius: 12,
-            color: "#F8FAFC",
+            background: "rgba(10,10,10,0.96)",
+            border: "1px solid rgba(255,255,255,0.16)",
+            borderRadius: 8,
+            color: "#F5F5F5",
           }}
           formatter={(v) => [`${MOOD_EMOJI[v]} ${v}/5`, "Настроение"]}
         />
         <Area
           type="monotone"
           dataKey="mood"
-          stroke="#8B5CF6"
+          stroke="#FFFFFF"
           strokeWidth={3}
           fill="url(#moodGrad)"
-          dot={{ fill: "#06B6D4", r: 4 }}
+          dot={{ fill: "#FFFFFF", r: 4 }}
           activeDot={{ r: 6 }}
         />
       </AreaChart>

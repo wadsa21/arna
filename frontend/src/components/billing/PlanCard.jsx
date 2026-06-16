@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 import { planFeatureRows, PLAN_GRADIENTS, PLAN_ICON } from "./planFeatures";
 
 const StatusIcon = ({ status }) => {
-  if (status === "yes") return <Check className="h-4 w-4 shrink-0 text-accent2" />;
-  if (status === "soon") return <Clock className="h-4 w-4 shrink-0 text-accent3" />;
+  if (status === "yes") return <Check className="h-4 w-4 shrink-0 text-text-primary" />;
+  if (status === "soon") return <Clock className="h-4 w-4 shrink-0 text-text-secondary" />;
   return <X className="h-4 w-4 shrink-0 text-text-secondary/50" />;
 };
 
@@ -42,19 +42,19 @@ export default function PlanCard({ plan, billingCycle, currentPlan, onSelect, in
       whileHover={{ y: -6 }}
       className={`glass-card relative flex flex-col p-6 ${
         featured
-          ? "neon-glow border-primary/40 lg:scale-105 lg:-my-2"
+          ? "neon-glow border-white/40 lg:-my-2 lg:scale-105"
           : ""
       }`}
     >
       {featured && (
-        <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-brand px-4 py-1 text-xs font-bold text-white shadow-neon-primary">
+        <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-white px-4 py-1 text-xs font-bold text-black shadow-neon-primary">
           <Crown className="mr-1 inline h-3 w-3" />
           {t("billing.popular")}
         </span>
       )}
 
       <div
-        className={`mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${PLAN_GRADIENTS[plan.name]} text-white shadow-lg`}
+        className={`mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${PLAN_GRADIENTS[plan.name]} text-black shadow-lg`}
       >
         <Icon className="h-7 w-7" />
       </div>
@@ -74,7 +74,7 @@ export default function PlanCard({ plan, billingCycle, currentPlan, onSelect, in
             <span>
               {row.label}
               {row.status === "soon" && (
-                <span className="ml-1.5 rounded-full bg-accent3/15 px-1.5 py-0.5 text-[10px] font-bold text-accent3">
+                <span className="ml-1.5 rounded-full bg-white/10 px-1.5 py-0.5 text-[10px] font-bold text-text-secondary">
                   {t("billing.soon")}
                 </span>
               )}
@@ -84,7 +84,7 @@ export default function PlanCard({ plan, billingCycle, currentPlan, onSelect, in
       </ul>
 
       {isCurrent ? (
-        <div className="rounded-2xl border border-accent2/40 bg-accent2/10 py-3 text-center text-sm font-bold text-accent2">
+        <div className="rounded-2xl border border-white bg-white py-3 text-center text-sm font-bold text-black">
           {t("billing.current")}
         </div>
       ) : plan.is_contact_sales ? (
@@ -94,7 +94,7 @@ export default function PlanCard({ plan, billingCycle, currentPlan, onSelect, in
       ) : !Number(plan.price_monthly) ? (
         <button
           onClick={() => onSelect(plan)}
-          className="w-full rounded-2xl border border-white/10 py-3 font-semibold text-text-primary transition-colors hover:bg-white/5"
+          className="w-full rounded-2xl border border-white/20 py-3 font-semibold text-text-primary transition-colors hover:bg-white hover:text-black"
         >
           {t("billing.start_free")}
         </button>

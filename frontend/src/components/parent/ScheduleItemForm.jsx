@@ -32,7 +32,7 @@ export default function ScheduleItemForm({ open, onClose, onSubmit, loading }) {
     <Modal open={open} onClose={onClose} title={t("schedule.add_activity")}>
       <form onSubmit={submit} className="space-y-4">
         <div className="flex items-center gap-4">
-          <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-brand text-3xl shadow-neon-primary">
+          <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-white/20 bg-white text-3xl text-black shadow-neon-primary">
             {form.emoji}
           </div>
           <div className="flex-1">

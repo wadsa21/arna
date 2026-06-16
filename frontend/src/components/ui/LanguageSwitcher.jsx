@@ -11,7 +11,7 @@ export default function LanguageSwitcher({ className = "" }) {
 
   return (
     <div
-      className={`inline-flex items-center rounded-full border border-white/10 bg-surface2/60 p-1 ${className}`}
+      className={`inline-flex items-center rounded-full border border-white/10 bg-black/40 p-1 ${className}`}
     >
       {LANGS.map(({ code, label }) => (
         <button
@@ -19,7 +19,7 @@ export default function LanguageSwitcher({ className = "" }) {
           onClick={() => i18n.changeLanguage(code)}
           className={`rounded-full px-3 py-1 text-xs font-bold transition-all ${
             current === code
-              ? "bg-gradient-brand text-white shadow-neon-primary"
+              ? "bg-white text-black"
               : "text-text-secondary hover:text-text-primary"
           }`}
         >

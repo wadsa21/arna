@@ -21,25 +21,23 @@
 
   body {
     @apply bg-background text-text-primary font-sans antialiased;
-    /* Многослойный mesh-градиент для глубины */
     background-image:
-      radial-gradient(60rem 60rem at 12% -5%, rgba(99, 102, 241, 0.18), transparent 55%),
-      radial-gradient(50rem 50rem at 95% 8%, rgba(6, 182, 212, 0.14), transparent 55%),
-      radial-gradient(55rem 55rem at 50% 110%, rgba(139, 92, 246, 0.16), transparent 55%),
-      radial-gradient(40rem 40rem at 80% 80%, rgba(16, 185, 129, 0.08), transparent 50%);
+      linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      radial-gradient(70rem 50rem at 50% -20%, rgba(255, 255, 255, 0.08), transparent 58%);
+    background-size: 48px 48px, 48px 48px, auto;
     background-attachment: fixed;
-    background-color: #0b0b16;
-    letter-spacing: -0.011em;
+    background-color: #050505;
+    letter-spacing: 0;
   }
 
-  /* Тонкая зернистость поверх фона — премиальная фактура */
   body::before {
     content: "";
     position: fixed;
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    opacity: 0.04;
+    opacity: 0.035;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
@@ -47,12 +45,12 @@
   h2,
   h3,
   h4 {
-    letter-spacing: -0.025em;
+    letter-spacing: 0;
   }
 
   ::selection {
-    background: rgba(139, 92, 246, 0.35);
-    color: #fff;
+    background: #fff;
+    color: #000;
   }
 
   ::-webkit-scrollbar {
@@ -64,106 +62,86 @@
   }
   ::-webkit-scrollbar-thumb {
     border-radius: 9999px;
-    background: linear-gradient(180deg, rgba(99, 102, 241, 0.6), rgba(139, 92, 246, 0.6));
+    background: rgba(255, 255, 255, 0.22);
     border: 2px solid transparent;
     background-clip: padding-box;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, rgba(99, 102, 241, 0.9), rgba(6, 182, 212, 0.9));
+    background: rgba(255, 255, 255, 0.38);
     background-clip: padding-box;
   }
 }
 
 @layer components {
-  /* Градиентный текст с лёгким живым переливом */
   .gradient-text {
-    @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(110deg, #818cf8, #a78bfa 40%, #22d3ee 75%, #818cf8);
-    background-size: 220% auto;
-    animation: text-shimmer 8s linear infinite;
+    @apply text-text-primary;
+    background-image: none;
   }
   .gradient-text-warm {
-    @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(110deg, #fbbf24, #fb7185 60%, #f59e0b);
-    background-size: 200% auto;
+    @apply text-text-primary;
+    background-image: none;
   }
 
-  /* Glassmorphism нового уровня: подложка + верхний хайлайт + мягкая тень */
   .glass-card {
     position: relative;
-    border-radius: 24px;
+    border-radius: 8px;
     background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015)),
-      rgba(22, 22, 40, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(18px) saturate(140%);
-    -webkit-backdrop-filter: blur(18px) saturate(140%);
+      linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02)),
+      rgba(14, 14, 14, 0.86);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
     box-shadow:
-      0 1px 0 0 rgba(255, 255, 255, 0.06) inset,
-      0 20px 50px -24px rgba(0, 0, 0, 0.8),
-      0 8px 24px -16px rgba(99, 102, 241, 0.25);
+      0 1px 0 rgba(255, 255, 255, 0.08) inset,
+      0 24px 80px -48px rgba(0, 0, 0, 0.96);
   }
-  /* Тонкая светящаяся линия по верхнему краю */
   .glass-card::after {
     content: "";
     position: absolute;
     inset: 0 0 auto 0;
     height: 1px;
-    border-radius: 24px 24px 0 0;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.35),
-      transparent
-    );
-    opacity: 0.5;
+    border-radius: 8px 8px 0 0;
+    background: rgba(255, 255, 255, 0.18);
+    opacity: 0.65;
     pointer-events: none;
   }
 
-  /* Карточка с градиентной рамкой (для акцентных блоков) */
   .gradient-border {
-    border: 1px solid transparent;
+    border: 1px solid rgba(255, 255, 255, 0.32);
     background:
-      linear-gradient(rgba(20, 20, 36, 0.85), rgba(20, 20, 36, 0.85)) padding-box,
-      linear-gradient(135deg, #6366f1, #8b5cf6 50%, #06b6d4) border-box;
+      linear-gradient(rgba(18, 18, 18, 0.96), rgba(18, 18, 18, 0.96)) padding-box,
+      linear-gradient(135deg, #fff, #525252) border-box;
   }
 
-  /* Неоновое свечение */
   .neon-glow {
     box-shadow:
-      0 0 0 1px rgba(99, 102, 241, 0.25),
-      0 0 30px -6px rgba(99, 102, 241, 0.55),
-      0 0 60px -20px rgba(139, 92, 246, 0.5),
-      0 20px 50px -24px rgba(0, 0, 0, 0.8);
+      0 0 0 1px rgba(255, 255, 255, 0.18),
+      0 30px 90px -54px rgba(255, 255, 255, 0.35),
+      0 24px 80px -48px rgba(0, 0, 0, 0.96);
   }
 
-  /* Премиальная градиентная кнопка с глянцем */
   .btn-gradient {
     @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-2xl px-6 py-3
-           font-semibold text-white transition-all duration-300;
-    background-image: linear-gradient(120deg, #6366f1, #8b5cf6 45%, #06b6d4);
-    background-size: 200% 200%;
-    background-position: 0% 50%;
+           font-semibold text-black transition-all duration-200;
+    background: #f5f5f5;
     box-shadow:
-      0 1px 0 0 rgba(255, 255, 255, 0.25) inset,
-      0 10px 24px -10px rgba(99, 102, 241, 0.7);
+      0 1px 0 rgba(255, 255, 255, 0.8) inset,
+      0 18px 36px -24px rgba(255, 255, 255, 0.7);
   }
-  /* Глянцевый блик сверху */
   .btn-gradient::before {
     content: "";
     position: absolute;
-    inset: 0 0 50% 0;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent);
-    opacity: 0.6;
+    inset: 0;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: inherit;
     pointer-events: none;
   }
   .btn-gradient:hover {
-    background-position: 100% 50%;
+    background: #fff;
     transform: translateY(-2px);
     box-shadow:
-      0 1px 0 0 rgba(255, 255, 255, 0.3) inset,
-      0 16px 36px -10px rgba(99, 102, 241, 0.8),
-      0 0 24px -6px rgba(139, 92, 246, 0.6);
+      0 1px 0 rgba(255, 255, 255, 0.8) inset,
+      0 22px 44px -26px rgba(255, 255, 255, 0.82);
   }
   .btn-gradient:active {
     transform: translateY(0) scale(0.985);
@@ -173,22 +151,19 @@
     transform: none;
   }
 
-  /* Анимированный градиентный фон hero */
   .animated-gradient-bg {
-    background: linear-gradient(-45deg, #6366f1, #8b5cf6, #06b6d4, #10b981);
+    background: linear-gradient(-45deg, #050505, #171717, #f5f5f5, #525252);
     background-size: 400% 400%;
     @apply animate-gradient-shift;
   }
 
-  /* Blob для фоновых частиц */
   .blob {
     @apply absolute rounded-full pointer-events-none;
-    filter: blur(80px);
-    opacity: 0.5;
-    mix-blend-mode: screen;
+    filter: blur(90px);
+    opacity: 0.08;
+    mix-blend-mode: normal;
   }
 
-  /* Заголовок секции */
   .section-title {
     @apply text-2xl font-extrabold gradient-text;
   }
@@ -220,11 +195,11 @@
 
 @layer components {
   .skeleton {
-    border-radius: 16px;
+    border-radius: 8px;
     background: linear-gradient(
       100deg,
       rgba(255, 255, 255, 0.04) 30%,
-      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0.14) 50%,
       rgba(255, 255, 255, 0.04) 70%
     );
     background-size: 200% 100%;

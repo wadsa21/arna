@@ -7,9 +7,9 @@ export function Input({ label, className = "", ...props }) {
         </span>
       )}
       <input
-        className={`w-full rounded-2xl border border-white/10 bg-surface2/50 px-4 py-3 text-text-primary hover:border-white/20
+        className={`w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-text-primary hover:border-white/25
                     placeholder:text-text-secondary/60 outline-none transition-all
-                    focus:border-primary/70 focus:ring-4 focus:ring-primary/15 focus:shadow-[0_0_0_1px_rgba(99,102,241,0.4),0_8px_24px_-12px_rgba(99,102,241,0.5)] ${className}`}
+                    focus:border-white/70 focus:ring-4 focus:ring-white/10 focus:shadow-[0_0_0_1px_rgba(255,255,255,0.24),0_12px_36px_-24px_rgba(255,255,255,0.5)] ${className}`}
         {...props}
       />
     </label>
@@ -26,9 +26,9 @@ export function Textarea({ label, className = "", ...props }) {
       )}
       <textarea
         rows={3}
-        className={`w-full rounded-2xl border border-white/10 bg-surface2/50 px-4 py-3 text-text-primary hover:border-white/20
+        className={`w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-text-primary hover:border-white/25
                     placeholder:text-text-secondary/60 outline-none transition-all resize-none
-                    focus:border-primary/70 focus:ring-4 focus:ring-primary/15 focus:shadow-[0_0_0_1px_rgba(99,102,241,0.4),0_8px_24px_-12px_rgba(99,102,241,0.5)] ${className}`}
+                    focus:border-white/70 focus:ring-4 focus:ring-white/10 focus:shadow-[0_0_0_1px_rgba(255,255,255,0.24),0_12px_36px_-24px_rgba(255,255,255,0.5)] ${className}`}
         {...props}
       />
     </label>
@@ -44,8 +44,8 @@ export function Select({ label, children, className = "", ...props }) {
         </span>
       )}
       <select
-        className={`w-full rounded-2xl border border-white/10 bg-surface2/50 px-4 py-3 text-text-primary hover:border-white/20
-                    outline-none transition-all focus:border-primary/70 focus:ring-4 focus:ring-primary/15 focus:shadow-[0_0_0_1px_rgba(99,102,241,0.4),0_8px_24px_-12px_rgba(99,102,241,0.5)] ${className}`}
+        className={`w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-text-primary hover:border-white/25
+                    outline-none transition-all focus:border-white/70 focus:ring-4 focus:ring-white/10 focus:shadow-[0_0_0_1px_rgba(255,255,255,0.24),0_12px_36px_-24px_rgba(255,255,255,0.5)] ${className}`}
         {...props}
       >
         {children}

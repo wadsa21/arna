@@ -82,7 +82,7 @@ export default function Dashboard() {
         {/* Mood chart */}
         <Card className="lg:col-span-2" glow>
           <div className="mb-4 flex items-center gap-2">
-            <TrendingUp className="h-5 w-5 text-secondary" />
+            <TrendingUp className="h-5 w-5 text-text-secondary" />
             <h2 className="text-lg font-bold">{t("dashboard.mood_week")}</h2>
           </div>
           {behaviorQuery.isLoading ? (
@@ -113,8 +113,8 @@ export default function Dashboard() {
                 />
                 <defs>
                   <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stopColor="#6366F1" />
-                    <stop offset="100%" stopColor="#06B6D4" />
+                    <stop offset="0%" stopColor="#FFFFFF" />
+                    <stop offset="100%" stopColor="#A3A3A3" />
                   </linearGradient>
                 </defs>
               </svg>
@@ -162,7 +162,7 @@ export default function Dashboard() {
         <Card>
           <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <CalendarDays className="h-5 w-5 text-accent1" />
+              <CalendarDays className="h-5 w-5 text-text-secondary" />
               <h2 className="text-lg font-bold">{t("dashboard.today_schedule")}</h2>
             </div>
             <Link to="/parent/schedule">
@@ -176,7 +176,7 @@ export default function Dashboard() {
               {schedule.items.map((it) => (
                 <div
                   key={it.id}
-                  className="flex items-center gap-3 rounded-2xl bg-surface2/50 p-3"
+                  className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/30 p-3"
                 >
                   <span className="text-2xl">{it.emoji}</span>
                   <span className="font-semibold">
@@ -211,7 +211,7 @@ export default function Dashboard() {
               {[...logs].reverse().slice(0, 5).map((l) => (
                 <div
                   key={l.id}
-                  className="flex items-center gap-3 rounded-2xl bg-surface2/50 p-3"
+                  className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/30 p-3"
                 >
                   <span className="text-2xl">{MOOD_EMOJI[l.mood]}</span>
                   <div className="min-w-0">

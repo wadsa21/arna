@@ -1,14 +1,9 @@
 import { motion } from "framer-motion";
 
-/**
- * Огромная тактильная кнопка для детского интерфейса.
- * Минимум 120×120px, яркая, с анимацией нажатия.
- */
 export default function BigButton({
   emoji,
   label,
   onClick,
-  gradient = "from-primary to-secondary",
   size = "md",
   done = false,
 }) {
@@ -22,15 +17,15 @@ export default function BigButton({
       whileTap={{ scale: 0.9 }}
       whileHover={{ scale: 1.04 }}
       onClick={onClick}
-      className={`relative flex flex-col items-center justify-center gap-3 rounded-3xl bg-gradient-to-br ${gradient}
-                  ${sizes[size]} font-extrabold text-white shadow-2xl
+      className={`relative flex flex-col items-center justify-center gap-3 rounded-3xl border border-white/20 bg-white
+                  ${sizes[size]} font-extrabold text-black shadow-2xl
                   ${done ? "opacity-60" : ""}`}
-      style={{ boxShadow: "0 12px 40px -8px rgba(99,102,241,0.6)" }}
+      style={{ boxShadow: "0 16px 48px -28px rgba(255,255,255,0.7)" }}
     >
       <span className="text-6xl drop-shadow-lg sm:text-7xl">{emoji}</span>
       <span className="text-center leading-tight">{label}</span>
       {done && (
-        <span className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-white text-2xl">
+        <span className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-black text-2xl">
           ✅
         </span>
       )}

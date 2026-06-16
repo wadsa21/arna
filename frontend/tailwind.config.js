@@ -4,38 +4,38 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#6366F1", // индиго/фиолетовый
-        secondary: "#8B5CF6", // пурпурный
-        accent1: "#06B6D4", // циан
-        accent2: "#10B981", // изумрудный
-        accent3: "#F59E0B", // янтарный
-        accent4: "#EF4444", // красный (алерты)
-        background: "#0F0F1A", // тёмно-синий почти чёрный
-        surface: "#1A1A2E",
-        surface2: "#16213E",
-        "text-primary": "#F8FAFC",
-        "text-secondary": "#94A3B8",
+        primary: "#F5F5F5",
+        secondary: "#D4D4D4",
+        accent1: "#A3A3A3",
+        accent2: "#FAFAFA",
+        accent3: "#737373",
+        accent4: "#FFFFFF",
+        background: "#050505",
+        surface: "#0D0D0D",
+        surface2: "#171717",
+        "text-primary": "#F5F5F5",
+        "text-secondary": "#A3A3A3",
       },
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
         display: ["Inter", "system-ui", "sans-serif"],
       },
       borderRadius: {
-        xl: "16px",
-        "2xl": "20px",
-        "3xl": "24px",
+        xl: "8px",
+        "2xl": "8px",
+        "3xl": "10px",
       },
       boxShadow: {
-        "neon-primary": "0 0 24px -2px rgba(99,102,241,0.55)",
-        "neon-secondary": "0 0 24px -2px rgba(139,92,246,0.55)",
-        "neon-accent1": "0 0 24px -2px rgba(6,182,212,0.55)",
-        "neon-accent2": "0 0 24px -2px rgba(16,185,129,0.55)",
-        glass: "0 8px 32px 0 rgba(0,0,0,0.37)",
+        "neon-primary": "0 18px 48px -28px rgba(255,255,255,0.5)",
+        "neon-secondary": "0 18px 48px -28px rgba(255,255,255,0.35)",
+        "neon-accent1": "0 18px 48px -28px rgba(255,255,255,0.3)",
+        "neon-accent2": "0 18px 48px -28px rgba(255,255,255,0.3)",
+        glass: "0 24px 70px -40px rgba(0,0,0,0.9)",
       },
       backgroundImage: {
-        "gradient-brand": "linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #06B6D4 100%)",
-        "gradient-warm": "linear-gradient(135deg, #F59E0B 0%, #EF4444 100%)",
-        "gradient-cool": "linear-gradient(135deg, #06B6D4 0%, #10B981 100%)",
+        "gradient-brand": "linear-gradient(135deg, #FFFFFF 0%, #D4D4D4 100%)",
+        "gradient-warm": "linear-gradient(135deg, #F5F5F5 0%, #737373 100%)",
+        "gradient-cool": "linear-gradient(135deg, #E5E5E5 0%, #737373 100%)",
       },
       keyframes: {
         blob: {
@@ -52,8 +52,8 @@ export default {
           "50%": { transform: "translateY(-12px)" },
         },
         "pulse-glow": {
-          "0%,100%": { boxShadow: "0 0 20px -4px rgba(99,102,241,0.5)" },
-          "50%": { boxShadow: "0 0 40px 0 rgba(139,92,246,0.7)" },
+          "0%,100%": { boxShadow: "0 0 0 1px rgba(255,255,255,0.12)" },
+          "50%": { boxShadow: "0 0 0 1px rgba(255,255,255,0.28)" },
         },
       },
       animation: {

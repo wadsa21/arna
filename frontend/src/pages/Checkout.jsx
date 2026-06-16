@@ -67,7 +67,7 @@ export default function Checkout() {
         particleCount: 140,
         spread: 90,
         origin: { y: 0.6 },
-        colors: ["#6366F1", "#8B5CF6", "#06B6D4", "#10B981", "#F59E0B"],
+        colors: ["#FFFFFF", "#D4D4D4", "#A3A3A3", "#737373"],
       });
       toast.success(t("billing.pay_success"));
       setTimeout(() => navigate("/parent/dashboard"), 1200);
@@ -97,9 +97,9 @@ export default function Checkout() {
         ) : (
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="glass-card neon-glow p-6">
             {/* Выбранный план */}
-            <div className="mb-5 flex items-center gap-4 rounded-2xl bg-surface2/60 p-4">
+            <div className="mb-5 flex items-center gap-4 rounded-2xl border border-white/10 bg-black/30 p-4">
               <div
-                className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${PLAN_GRADIENTS[plan.name]} text-white`}
+                className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${PLAN_GRADIENTS[plan.name]} text-black`}
               >
                 {(() => {
                   const Icon = PLAN_ICON[plan.name] || PLAN_ICON.FREE;
@@ -113,13 +113,13 @@ export default function Checkout() {
             </div>
 
             {/* Цикл */}
-            <div className="mb-5 inline-flex w-full rounded-2xl border border-white/10 bg-surface2/60 p-1">
+            <div className="mb-5 inline-flex w-full rounded-2xl border border-white/10 bg-black/40 p-1">
               {["MONTHLY", "YEARLY"].map((c) => (
                 <button
                   key={c}
                   onClick={() => setCycle(c)}
                   className={`flex-1 rounded-xl py-2 text-sm font-bold transition-all ${
-                    cycle === c ? "bg-gradient-brand text-white" : "text-text-secondary"
+                    cycle === c ? "bg-white text-black" : "text-text-secondary"
                   }`}
                 >
                   {t(`billing.${c === "MONTHLY" ? "monthly" : "yearly"}`)}
@@ -140,8 +140,8 @@ export default function Checkout() {
                     onClick={() => setMethod(m.value)}
                     className={`flex items-center justify-center gap-2 rounded-2xl border p-3 text-sm font-semibold transition-all ${
                       method === m.value
-                        ? "border-primary bg-primary/15 shadow-neon-primary"
-                        : "border-white/10 bg-surface2/40 hover:bg-white/5"
+                        ? "border-white bg-white text-black shadow-neon-primary"
+                        : "border-white/10 bg-black/30 hover:bg-white/10"
                     }`}
                   >
                     <Icon className="h-4 w-4" /> {m.label}
@@ -159,17 +159,17 @@ export default function Checkout() {
                 value={code}
                 onChange={(e) => setCode(e.target.value.toUpperCase())}
                 placeholder="ARNA..."
-                className="flex-1 rounded-2xl border border-white/10 bg-surface2/60 px-4 py-2.5 text-text-primary outline-none focus:border-primary/60"
+                className="flex-1 rounded-2xl border border-white/10 bg-black/40 px-4 py-2.5 text-text-primary outline-none focus:border-white/60"
               />
               <Button variant="ghost" onClick={applyCode} className="!py-2.5">
-                {referral?.valid ? <Check className="h-4 w-4 text-accent2" /> : t("billing.referral_apply")}
+                {referral?.valid ? <Check className="h-4 w-4 text-text-primary" /> : t("billing.referral_apply")}
               </Button>
             </div>
 
             {/* Итого */}
             <div className="mb-5 space-y-2 border-t border-white/10 pt-4">
               {discount > 0 && (
-                <div className="flex justify-between text-sm text-accent2">
+                <div className="flex justify-between text-sm text-text-primary">
                   <span>{t("billing.discount")}</span>
                   <span>−{fmt(discount)} ₸</span>
                 </div>

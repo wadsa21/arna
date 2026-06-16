@@ -101,18 +101,22 @@ export default function Pricing() {
         </p>
 
         {/* Цикл оплаты */}
-        <div className="mt-7 inline-flex items-center gap-1 rounded-full border border-white/10 bg-surface2/60 p-1">
+        <div className="mt-7 inline-flex items-center gap-1 rounded-full border border-white/10 bg-black/40 p-1">
           {["MONTHLY", "YEARLY"].map((c) => (
             <button
               key={c}
               onClick={() => setCycle(c)}
               className={`flex items-center gap-2 rounded-full px-5 py-2 text-sm font-bold transition-all ${
-                cycle === c ? "bg-gradient-brand text-white shadow-neon-primary" : "text-text-secondary"
+                cycle === c ? "bg-white text-black shadow-neon-primary" : "text-text-secondary"
               }`}
             >
               {t(`billing.${c === "MONTHLY" ? "monthly" : "yearly"}`)}
               {c === "YEARLY" && (
-                <span className="rounded-full bg-accent2/20 px-2 py-0.5 text-[10px] font-bold text-accent2">
+                <span
+                  className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
+                    cycle === c ? "bg-black/10 text-black" : "bg-white/10 text-text-secondary"
+                  }`}
+                >
                   {t("billing.save_hint")}
                 </span>
               )}

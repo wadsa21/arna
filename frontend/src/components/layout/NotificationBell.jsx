@@ -21,11 +21,11 @@ export default function NotificationBell() {
     <div className="relative">
       <button
         onClick={() => setOpen((o) => !o)}
-        className="relative rounded-2xl border border-white/10 bg-surface2/60 p-2.5 hover:bg-white/5 transition-colors"
+        className="relative rounded-2xl border border-white/10 bg-black/40 p-2.5 transition-colors hover:bg-white/10"
       >
         <Bell className="h-5 w-5 text-text-primary" />
         {unread > 0 && (
-          <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-accent4 px-1 text-[10px] font-bold text-white">
+          <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-white px-1 text-[10px] font-bold text-black">
             {unread}
           </span>
         )}
@@ -51,7 +51,7 @@ export default function NotificationBell() {
               <div
                 key={n.id}
                 className={`rounded-2xl p-3 mb-1.5 ${
-                  n.is_read ? "bg-white/5" : "bg-primary/10 border border-primary/20"
+                  n.is_read ? "bg-white/5" : "border border-white/25 bg-white/10"
                 }`}
               >
                 <p className="text-sm font-semibold text-text-primary">{n.title}</p>

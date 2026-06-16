@@ -3,14 +3,6 @@ import { useTranslation } from "react-i18next";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSound } from "../../hooks/useSound";
 
-const CARD_GRADIENTS = [
-  "from-primary to-secondary",
-  "from-accent1 to-accent2",
-  "from-accent3 to-accent4",
-  "from-secondary to-accent1",
-  "from-accent2 to-primary",
-];
-
 export default function CommunicationCards({ cards }) {
   const { i18n } = useTranslation();
   const lang = i18n.resolvedLanguage;
@@ -35,16 +27,14 @@ export default function CommunicationCards({ cards }) {
   return (
     <>
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-        {cards.map((card, i) => (
+        {cards.map((card) => (
           <motion.button
             key={card.id}
             whileTap={{ scale: 0.88 }}
             whileHover={{ scale: 1.05, rotate: 1 }}
             onClick={() => speak(card)}
-            className={`tap-shrink flex min-h-[140px] flex-col items-center justify-center gap-2 rounded-3xl bg-gradient-to-br ${
-              CARD_GRADIENTS[i % CARD_GRADIENTS.length]
-            } p-4 text-white shadow-xl`}
-            style={{ boxShadow: "0 10px 32px -8px rgba(99,102,241,0.5)" }}
+            className="tap-shrink flex min-h-[140px] flex-col items-center justify-center gap-2 rounded-3xl border border-white/20 bg-white p-4 text-black shadow-xl"
+            style={{ boxShadow: "0 16px 44px -30px rgba(255,255,255,0.7)" }}
           >
             <span className="text-5xl drop-shadow-lg sm:text-6xl">
               {card.image ? (

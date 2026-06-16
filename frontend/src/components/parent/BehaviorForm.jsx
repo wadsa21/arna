@@ -70,12 +70,16 @@ export default function BehaviorForm({ childId }) {
                 onClick={() => setForm({ ...form, mood: v })}
                 className={`flex flex-1 flex-col items-center gap-1 rounded-2xl border p-2 transition-all ${
                   form.mood === v
-                    ? "border-primary bg-primary/15 shadow-neon-primary scale-105"
-                    : "border-white/10 bg-surface2/40 hover:bg-white/5"
+                    ? "scale-105 border-white bg-white text-black shadow-neon-primary"
+                    : "border-white/10 bg-black/30 hover:bg-white/10"
                 }`}
               >
                 <span className="text-3xl">{e}</span>
-                <span className="text-[10px] text-text-secondary">
+                <span
+                  className={`text-[10px] ${
+                    form.mood === v ? "text-black/70" : "text-text-secondary"
+                  }`}
+                >
                   {t(`behavior.mood_labels.${v}`)}
                 </span>
               </motion.button>

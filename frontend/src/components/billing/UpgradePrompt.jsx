@@ -3,9 +3,6 @@ import { useTranslation } from "react-i18next";
 import { Lock, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
-/**
- * Мягкий янтарный баннер для страниц, где фича заблокирована.
- */
 export default function UpgradePrompt({ requiredPlan = "OTBASY", message }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -14,9 +11,9 @@ export default function UpgradePrompt({ requiredPlan = "OTBASY", message }) {
     <motion.div
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      className="flex flex-col items-center gap-4 rounded-3xl border border-accent3/30 bg-gradient-to-br from-accent3/15 to-accent4/10 p-8 text-center"
+      className="flex flex-col items-center gap-4 rounded-3xl border border-white/20 bg-white/[0.04] p-8 text-center"
     >
-      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-warm text-white shadow-lg">
+      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black shadow-lg">
         <Lock className="h-7 w-7" />
       </div>
       <p className="max-w-md text-lg font-semibold text-text-primary">

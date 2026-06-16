@@ -1,40 +1,30 @@
-/** Премиальный анимированный фон: парящие цветные орбы + лёгкая сетка. */
 export default function AnimatedBackground() {
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden">
-      {/* Тонкая перспективная сетка */}
       <div
-        className="absolute inset-0 opacity-[0.04]"
+        className="absolute inset-0 opacity-[0.08]"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)",
-          backgroundSize: "56px 56px",
-          maskImage: "radial-gradient(ellipse at 50% 0%, black, transparent 75%)",
-          WebkitMaskImage: "radial-gradient(ellipse at 50% 0%, black, transparent 75%)",
+            "linear-gradient(rgba(255,255,255,0.42) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.42) 1px, transparent 1px)",
+          backgroundSize: "48px 48px",
+          maskImage: "linear-gradient(to bottom, black, transparent 80%)",
+          WebkitMaskImage: "linear-gradient(to bottom, black, transparent 80%)",
         }}
       />
 
-      {/* Цветные орбы */}
-      <div className="blob bg-primary w-[44rem] h-[44rem] -top-48 -left-40 animate-blob" />
       <div
-        className="blob bg-accent1 w-[34rem] h-[34rem] top-1/4 -right-44 animate-blob"
-        style={{ animationDelay: "3s" }}
-      />
-      <div
-        className="blob bg-secondary w-[40rem] h-[40rem] -bottom-48 left-1/4 animate-blob"
-        style={{ animationDelay: "6s" }}
-      />
-      <div
-        className="blob bg-accent2 w-[26rem] h-[26rem] top-1/3 left-1/2 animate-blob opacity-30"
-        style={{ animationDelay: "9s" }}
+        className="absolute inset-x-0 top-0 h-80 opacity-70"
+        style={{
+          background:
+            "radial-gradient(60% 70% at 50% 0%, rgba(255,255,255,0.12), transparent 65%)",
+        }}
       />
 
-      {/* Виньетка для фокуса на контенте */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(120% 80% at 50% 0%, transparent 60%, rgba(8,8,18,0.6) 100%)",
+            "radial-gradient(120% 80% at 50% 0%, transparent 52%, rgba(0,0,0,0.72) 100%)",
         }}
       />
     </div>

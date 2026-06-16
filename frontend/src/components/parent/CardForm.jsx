@@ -65,7 +65,7 @@ export default function CardForm({ open, onClose, childId }) {
         className="space-y-4"
       >
         <div className="flex items-center gap-4">
-          <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-gradient-brand text-4xl shadow-neon-primary">
+          <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-white/20 bg-white text-4xl text-black shadow-neon-primary">
             {preview ? (
               <img src={preview} alt="" className="h-full w-full object-cover" />
             ) : (
@@ -76,7 +76,7 @@ export default function CardForm({ open, onClose, childId }) {
             <button
               type="button"
               onClick={() => fileRef.current?.click()}
-              className="flex w-full items-center justify-center gap-2 rounded-2xl border border-white/10 bg-surface2/60 py-2.5 text-sm font-medium hover:bg-white/5"
+              className="flex w-full items-center justify-center gap-2 rounded-2xl border border-white/10 bg-black/30 py-2.5 text-sm font-medium hover:bg-white/10"
             >
               <Upload className="h-4 w-4" /> {t("cards.upload_image")}
             </button>
@@ -87,7 +87,7 @@ export default function CardForm({ open, onClose, childId }) {
                   setImage(null);
                   setPreview(null);
                 }}
-                className="flex items-center gap-1 text-xs text-accent4"
+                className="flex items-center gap-1 text-xs text-text-secondary hover:text-text-primary"
               >
                 <ImageOff className="h-3 w-3" /> {t("common.delete")}
               </button>

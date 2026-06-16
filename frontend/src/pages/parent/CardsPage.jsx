@@ -73,8 +73,8 @@ export default function CardsPage() {
           onClick={() => setFilter("ALL")}
           className={`rounded-full px-4 py-1.5 text-sm font-semibold transition-all ${
             filter === "ALL"
-              ? "bg-gradient-brand text-white shadow-neon-primary"
-              : "border border-white/10 bg-surface2/60 text-text-secondary hover:text-text-primary"
+              ? "bg-white text-black shadow-neon-primary"
+              : "border border-white/10 bg-black/30 text-text-secondary hover:text-text-primary"
           }`}
         >
           {t("common.all")}
@@ -85,8 +85,8 @@ export default function CardsPage() {
             onClick={() => setFilter(c)}
             className={`rounded-full px-4 py-1.5 text-sm font-semibold transition-all ${
               filter === c
-                ? "bg-gradient-brand text-white shadow-neon-primary"
-                : "border border-white/10 bg-surface2/60 text-text-secondary hover:text-text-primary"
+                ? "bg-white text-black shadow-neon-primary"
+                : "border border-white/10 bg-black/30 text-text-secondary hover:text-text-primary"
             }`}
           >
             {t(`cards.categories.${c}`)}
@@ -113,7 +113,7 @@ export default function CardsPage() {
                 card.is_active ? "" : "opacity-50"
               }`}
             >
-              <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-surface2 to-surface text-4xl">
+              <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-black/40 text-4xl">
                 {card.image ? (
                   <img src={card.image} alt="" className="h-full w-full object-cover" />
                 ) : (
@@ -132,7 +132,7 @@ export default function CardsPage() {
                   title={card.is_active ? t("cards.active") : t("cards.inactive")}
                   className={`rounded-xl p-2 transition-colors ${
                     card.is_active
-                      ? "text-accent2 hover:bg-accent2/15"
+                      ? "text-text-primary hover:bg-white/10"
                       : "text-text-secondary hover:bg-white/10"
                   }`}
                 >
@@ -140,7 +140,7 @@ export default function CardsPage() {
                 </button>
                 <button
                   onClick={() => deleteMutation.mutate(card)}
-                  className="rounded-xl p-2 text-text-secondary hover:bg-accent4/20 hover:text-accent4"
+                  className="rounded-xl p-2 text-text-secondary hover:bg-white hover:text-black"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>

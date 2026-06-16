@@ -8,8 +8,7 @@ import { motion } from "framer-motion";
 export default function UsageMeter({ label, used, limit, icon }) {
   const unlimited = limit == null;
   const pct = unlimited ? 0 : Math.min(Math.round((used / limit) * 100), 100);
-  const color =
-    pct > 90 ? "from-accent4 to-accent4" : pct >= 70 ? "from-accent3 to-accent3" : "from-accent2 to-accent1";
+  const opacity = pct > 90 ? 1 : pct >= 70 ? 0.72 : 0.9;
 
   return (
     <div>
@@ -24,11 +23,11 @@ export default function UsageMeter({ label, used, limit, icon }) {
       </div>
       <div className="h-2.5 w-full overflow-hidden rounded-full bg-white/5">
         <motion.div
-          className={`h-full rounded-full bg-gradient-to-r ${color}`}
+          className="h-full rounded-full bg-white"
           initial={{ width: 0 }}
           animate={{ width: unlimited ? "100%" : `${pct}%` }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          style={unlimited ? { opacity: 0.25 } : undefined}
+          style={unlimited ? { opacity: 0.25 } : { opacity }}
         />
       </div>
     </div>

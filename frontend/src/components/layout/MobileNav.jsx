@@ -17,7 +17,7 @@ const NAV = [
 export default function MobileNav() {
   const { t } = useTranslation();
   return (
-    <nav className="lg:hidden fixed bottom-0 inset-x-0 z-40 glass-card rounded-t-3xl rounded-b-none border-b-0 px-2 py-2">
+    <nav className="fixed inset-x-0 bottom-0 z-40 rounded-b-none rounded-t-3xl border-b-0 px-2 py-2 lg:hidden glass-card">
       <div className="flex justify-around">
         {NAV.map(({ to, icon: Icon, key }) => (
           <NavLink
@@ -25,18 +25,12 @@ export default function MobileNav() {
             to={to}
             className={({ isActive }) =>
               `flex flex-col items-center gap-1 rounded-2xl px-3 py-2 text-xs font-medium transition-all ${
-                isActive ? "text-primary" : "text-text-secondary"
+                isActive ? "bg-white text-black" : "text-text-secondary"
               }`
             }
           >
-            {({ isActive }) => (
-              <>
-                <Icon
-                  className={`h-6 w-6 ${isActive ? "drop-shadow-[0_0_8px_rgba(99,102,241,0.8)]" : ""}`}
-                />
-                {t(`nav.${key}`)}
-              </>
-            )}
+            <Icon className="h-6 w-6" />
+            {t(`nav.${key}`)}
           </NavLink>
         ))}
       </div>

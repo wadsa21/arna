@@ -37,15 +37,14 @@ export default function ChildView() {
 
   return (
     <div className="relative min-h-screen overflow-hidden">
-      {/* Яркий анимированный фон */}
-      <div className="animated-gradient-bg fixed inset-0 -z-10 opacity-20" />
-      <div className="fixed inset-0 -z-10 bg-background/80" />
+      <div className="fixed inset-0 -z-10 bg-background" />
+      <div className="fixed inset-0 -z-10 opacity-[0.08] [background-image:linear-gradient(rgba(255,255,255,.4)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.4)_1px,transparent_1px)] [background-size:48px_48px]" />
 
       {/* Top bar */}
       <div className="flex items-center justify-between p-4">
         <button
           onClick={() => navigate("/parent/dashboard")}
-          className="flex h-12 w-12 items-center justify-center rounded-2xl bg-surface2/70 text-text-primary tap-shrink"
+          className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-black/40 text-text-primary tap-shrink"
         >
           <ArrowLeft className="h-6 w-6" />
         </button>
@@ -55,17 +54,17 @@ export default function ChildView() {
       {/* Tabs — огромные */}
       <div className="mx-auto flex max-w-2xl gap-3 px-4">
         {[
-          { key: "schedule", icon: CalendarHeart, label: t("child.my_day"), grad: "from-primary to-accent1" },
-          { key: "cards", icon: MessageCircleHeart, label: t("child.i_want_to_say"), grad: "from-secondary to-accent3" },
-        ].map(({ key, icon: Icon, label, grad }) => (
+          { key: "schedule", icon: CalendarHeart, label: t("child.my_day") },
+          { key: "cards", icon: MessageCircleHeart, label: t("child.i_want_to_say") },
+        ].map(({ key, icon: Icon, label }) => (
           <motion.button
             key={key}
             whileTap={{ scale: 0.94 }}
             onClick={() => setTab(key)}
             className={`flex flex-1 items-center justify-center gap-2 rounded-3xl py-5 text-xl font-extrabold transition-all ${
               tab === key
-                ? `bg-gradient-to-r ${grad} text-white shadow-2xl`
-                : "bg-surface2/60 text-text-secondary"
+                ? "bg-white text-black shadow-2xl"
+                : "border border-white/10 bg-black/40 text-text-secondary"
             }`}
           >
             <Icon className="h-7 w-7" />

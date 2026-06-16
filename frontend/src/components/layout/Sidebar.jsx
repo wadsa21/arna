@@ -44,7 +44,7 @@ export default function Sidebar({ childId }) {
                   {isActive && (
                     <motion.div
                       layoutId="sidebar-active"
-                      className="absolute inset-0 rounded-2xl bg-gradient-brand shadow-neon-primary"
+                      className="absolute inset-0 rounded-2xl bg-white shadow-neon-primary"
                       transition={{ type: "spring", stiffness: 380, damping: 32 }}
                     />
                   )}
@@ -52,7 +52,7 @@ export default function Sidebar({ childId }) {
                     whileHover={{ x: isActive ? 0 : 4 }}
                     className={`relative flex items-center gap-3 rounded-2xl px-4 py-3 font-semibold transition-colors ${
                       isActive
-                        ? "text-white"
+                        ? "text-black"
                         : "text-text-secondary hover:bg-white/[0.04] hover:text-text-primary"
                     }`}
                   >
