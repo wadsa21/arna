@@ -1,10 +1,5 @@
 export function Skeleton({ className = "" }) {
-  return (
-    <div
-      className={`animate-pulse rounded-2xl bg-white/5 ${className}`}
-      aria-hidden
-    />
-  );
+  return <div className={`skeleton ${className}`} aria-hidden />;
 }
 
 export function SkeletonList({ count = 4, itemClass = "h-20" }) {

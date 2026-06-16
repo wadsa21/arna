@@ -21,44 +21,55 @@ export default function Sidebar({ childId }) {
   const { t } = useTranslation();
 
   return (
-    <aside className="hidden lg:flex w-64 shrink-0 flex-col gap-2 p-4">
-      <div className="glass-card flex items-center gap-3 p-4 mb-2">
-        <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-brand text-2xl shadow-neon-primary">
+    <aside className="hidden lg:flex w-64 shrink-0 flex-col gap-3 p-4">
+      {/* Бренд */}
+      <div className="glass-card flex items-center gap-3 p-4">
+        <div className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-brand text-2xl shadow-neon-primary">
           🌈
+          <span className="absolute -right-0.5 -top-0.5 h-3 w-3 rounded-full border-2 border-surface bg-accent2" />
         </div>
         <div>
           <p className="text-lg font-extrabold gradient-text leading-none">
             {t("brand")}
           </p>
-          <p className="text-xs text-text-secondary">канал связи</p>
+          <p className="mt-1 text-xs text-text-secondary">канал связи</p>
         </div>
       </div>
 
-      <nav className="glass-card flex-1 p-3 space-y-1">
-        {NAV.map(({ to, icon: Icon, key }) => (
-          <NavLink key={to} to={to}>
-            {({ isActive }) => (
-              <motion.div
-                whileHover={{ x: 4 }}
-                className={`flex items-center gap-3 rounded-2xl px-4 py-3 font-semibold transition-all ${
-                  isActive
-                    ? "bg-gradient-brand text-white shadow-neon-primary"
-                    : "text-text-secondary hover:bg-white/5 hover:text-text-primary"
-                }`}
-              >
-                <Icon className="h-5 w-5" />
-                {t(`nav.${key}`)}
-              </motion.div>
-            )}
-          </NavLink>
-        ))}
+      {/* Навигация */}
+      <nav className="glass-card flex-1 p-3">
+        <div className="space-y-1">
+          {NAV.map(({ to, icon: Icon, key }) => (
+            <NavLink key={to} to={to} className="block">
+              {({ isActive }) => (
+                <div className="relative">
+                  {isActive && (
+                    <motion.div
+                      layoutId="sidebar-active"
+                      className="absolute inset-0 rounded-2xl bg-gradient-brand shadow-neon-primary"
+                      transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                    />
+                  )}
+                  <motion.div
+                    whileHover={{ x: isActive ? 0 : 4 }}
+                    className={`relative flex items-center gap-3 rounded-2xl px-4 py-3 font-semibold transition-colors ${
+                      isActive
+                        ? "text-white"
+                        : "text-text-secondary hover:bg-white/[0.04] hover:text-text-primary"
+                    }`}
+                  >
+                    <Icon className="h-5 w-5" />
+                    {t(`nav.${key}`)}
+                  </motion.div>
+                </div>
+              )}
+            </NavLink>
+          ))}
+        </div>
       </nav>
 
       {childId && (
-        <NavLink
-          to={`/child/${childId}`}
-          className="btn-gradient w-full justify-center"
-        >
+        <NavLink to={`/child/${childId}`} className="btn-gradient w-full justify-center">
           <Baby className="h-5 w-5" />
           {t("nav.child_mode")}
           <Sparkles className="h-4 w-4" />

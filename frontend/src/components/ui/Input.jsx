@@ -7,9 +7,9 @@ export function Input({ label, className = "", ...props }) {
         </span>
       )}
       <input
-        className={`w-full rounded-2xl border border-white/10 bg-surface2/60 px-4 py-3 text-text-primary
+        className={`w-full rounded-2xl border border-white/10 bg-surface2/50 px-4 py-3 text-text-primary hover:border-white/20
                     placeholder:text-text-secondary/60 outline-none transition-all
-                    focus:border-primary/60 focus:ring-2 focus:ring-primary/30 ${className}`}
+                    focus:border-primary/70 focus:ring-4 focus:ring-primary/15 focus:shadow-[0_0_0_1px_rgba(99,102,241,0.4),0_8px_24px_-12px_rgba(99,102,241,0.5)] ${className}`}
         {...props}
       />
     </label>
@@ -26,9 +26,9 @@ export function Textarea({ label, className = "", ...props }) {
       )}
       <textarea
         rows={3}
-        className={`w-full rounded-2xl border border-white/10 bg-surface2/60 px-4 py-3 text-text-primary
+        className={`w-full rounded-2xl border border-white/10 bg-surface2/50 px-4 py-3 text-text-primary hover:border-white/20
                     placeholder:text-text-secondary/60 outline-none transition-all resize-none
-                    focus:border-primary/60 focus:ring-2 focus:ring-primary/30 ${className}`}
+                    focus:border-primary/70 focus:ring-4 focus:ring-primary/15 focus:shadow-[0_0_0_1px_rgba(99,102,241,0.4),0_8px_24px_-12px_rgba(99,102,241,0.5)] ${className}`}
         {...props}
       />
     </label>
@@ -44,8 +44,8 @@ export function Select({ label, children, className = "", ...props }) {
         </span>
       )}
       <select
-        className={`w-full rounded-2xl border border-white/10 bg-surface2/60 px-4 py-3 text-text-primary
-                    outline-none transition-all focus:border-primary/60 focus:ring-2 focus:ring-primary/30 ${className}`}
+        className={`w-full rounded-2xl border border-white/10 bg-surface2/50 px-4 py-3 text-text-primary hover:border-white/20
+                    outline-none transition-all focus:border-primary/70 focus:ring-4 focus:ring-primary/15 focus:shadow-[0_0_0_1px_rgba(99,102,241,0.4),0_8px_24px_-12px_rgba(99,102,241,0.5)] ${className}`}
         {...props}
       >
         {children}

@@ -90,11 +90,14 @@ export default function Landing() {
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
+          className="relative"
         >
-          <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-sm font-semibold text-primary">
+          {/* Мягкое свечение за заголовком */}
+          <div className="pointer-events-none absolute -left-20 -top-24 h-72 w-72 rounded-full bg-primary/30 blur-[100px]" />
+          <span className="relative inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-sm font-semibold text-primary backdrop-blur-sm">
             <Zap className="h-4 w-4" /> {t("landing.made_with")}
           </span>
-          <h1 className="mt-5 text-5xl font-black leading-tight text-balance lg:text-6xl">
+          <h1 className="relative mt-5 text-5xl font-black leading-[1.05] text-balance lg:text-7xl">
             <span className="gradient-text">{t("landing.tagline")}</span>
           </h1>
           <p className="mt-5 max-w-xl text-lg text-text-secondary">
