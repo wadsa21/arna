@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
-import { User, Baby } from "lucide-react";
 
 import AnimatedBackground from "../components/ui/AnimatedBackground";
 import LanguageSwitcher from "../components/ui/LanguageSwitcher";
@@ -11,11 +10,6 @@ import Button from "../components/ui/Button";
 import { Input } from "../components/ui/Input";
 import { authApi } from "../services/api";
 import { useAuthStore } from "../store/authStore";
-
-const ROLES = [
-  { value: "PARENT", icon: User, key: "role_parent" },
-  { value: "CHILD", icon: Baby, key: "role_child" },
-];
 
 export default function Register() {
   const { t, i18n } = useTranslation();
@@ -26,7 +20,6 @@ export default function Register() {
     full_name: "",
     email: "",
     password: "",
-    role: "PARENT",
   });
   const [loading, setLoading] = useState(false);
 
@@ -34,7 +27,13 @@ export default function Register() {
     e.preventDefault();
     setLoading(true);
     try {
-      await authApi.register({ ...form, language: i18n.resolvedLanguage });
+      // Регистрируется всегда родитель/опекун: он заводит профили
+      // детей и открывает им детский режим (/child/:id).
+      await authApi.register({
+        ...form,
+        role: "PARENT",
+        language: i18n.resolvedLanguage,
+      });
       // авто-логин после регистрации
       const { data } = await authApi.login(form.email, form.password);
       setAuth({ user: data.user, access: data.access, refresh: data.refresh });
@@ -75,33 +74,6 @@ export default function Register() {
         </h1>
 
         <form onSubmit={submit} className="space-y-4">
-          <div>
-            <span className="mb-2 block text-sm font-medium text-text-secondary">
-              {t("auth.role")}
-            </span>
-            <div className="grid grid-cols-2 gap-3">
-              {ROLES.map(({ value, icon: Icon, key }) => (
-                <button
-                  key={value}
-                  type="button"
-                  onClick={() => setForm({ ...form, role: value })}
-                  className={`flex flex-col items-center gap-2 rounded-2xl border p-4 transition-all ${
-                    form.role === value
-                      ? "border-primary bg-primary/15 shadow-neon-primary"
-                      : "border-white/10 bg-surface2/40 hover:bg-white/5"
-                  }`}
-                >
-                  <Icon
-                    className={`h-7 w-7 ${
-                      form.role === value ? "text-primary" : "text-text-secondary"
-                    }`}
-                  />
-                  <span className="text-sm font-semibold">{t(`auth.${key}`)}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-
           <Input
             label={t("auth.full_name")}
             required
