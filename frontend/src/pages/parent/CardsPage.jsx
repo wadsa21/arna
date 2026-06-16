@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
-import { Plus, Trash2, Power } from "lucide-react";
+import { Plus, Trash2, Power, Pencil } from "lucide-react";
 
 import Card from "../../components/ui/Card";
 import Button from "../../components/ui/Button";
@@ -32,6 +32,7 @@ export default function CardsPage() {
 
   const [filter, setFilter] = useState("ALL");
   const [formOpen, setFormOpen] = useState(false);
+  const [editCard, setEditCard] = useState(null);
 
   const cardsQuery = useQuery({
     queryKey: ["cards", childId],
@@ -62,7 +63,12 @@ export default function CardsPage() {
     <div className="mx-auto max-w-6xl space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <h1 className="text-3xl font-extrabold gradient-text">{t("cards.title")}</h1>
-        <Button onClick={() => setFormOpen(true)}>
+        <Button
+          onClick={() => {
+            setEditCard(null);
+            setFormOpen(true);
+          }}
+        >
           <Plus className="h-5 w-5" /> {t("cards.new_card")}
         </Button>
       </div>
@@ -128,6 +134,16 @@ export default function CardsPage() {
               </Badge>
               <div className="mt-1 flex gap-1">
                 <button
+                  onClick={() => {
+                    setEditCard(card);
+                    setFormOpen(true);
+                  }}
+                  title={t("common.edit")}
+                  className="rounded-xl p-2 text-text-secondary hover:bg-white/10 hover:text-text-primary"
+                >
+                  <Pencil className="h-4 w-4" />
+                </button>
+                <button
                   onClick={() => toggleMutation.mutate(card)}
                   title={card.is_active ? t("cards.active") : t("cards.inactive")}
                   className={`rounded-xl p-2 transition-colors ${
@@ -152,7 +168,15 @@ export default function CardsPage() {
         <p className="py-16 text-center text-text-secondary">{t("common.empty")}</p>
       )}
 
-      <CardForm open={formOpen} onClose={() => setFormOpen(false)} childId={childId} />
+      <CardForm
+        open={formOpen}
+        card={editCard}
+        onClose={() => {
+          setFormOpen(false);
+          setEditCard(null);
+        }}
+        childId={childId}
+      />
     </div>
   );
 }

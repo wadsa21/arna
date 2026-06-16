@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-import { CalendarDays, Baby, Sparkles, TrendingUp, MessageSquareHeart } from "lucide-react";
+import toast from "react-hot-toast";
+import { CalendarDays, Baby, Sparkles, TrendingUp, MessageSquareHeart, Pencil, Trash2 } from "lucide-react";
 
 import Card from "../../components/ui/Card";
 import Button from "../../components/ui/Button";
@@ -10,10 +12,12 @@ import Badge from "../../components/ui/Badge";
 import { SkeletonList } from "../../components/ui/Skeleton";
 import MoodChart from "../../components/parent/MoodChart";
 import EmptyChild from "../../components/parent/EmptyChild";
+import ChildForm from "../../components/parent/ChildForm";
 import UsageMeter from "../../components/billing/UsageMeter";
 import { useChildren, toList } from "../../hooks/useChildren";
-import { scheduleApi, behaviorApi } from "../../services/api";
+import { scheduleApi, behaviorApi, childrenApi } from "../../services/api";
 import { useAuthStore } from "../../store/authStore";
+import { useUIStore } from "../../store/uiStore";
 import { useSubscriptionStore } from "../../store/subscriptionStore";
 
 const today = () => new Date().toISOString().slice(0, 10);
@@ -26,6 +30,25 @@ export default function Dashboard() {
   const subscription = useSubscriptionStore((s) => s.subscription);
   const { selectedChild, isLoading: childrenLoading, children } = useChildren();
   const childId = selectedChild?.id;
+  const qc = useQueryClient();
+  const setSelectedChild = useUIStore((s) => s.setSelectedChild);
+  const [editOpen, setEditOpen] = useState(false);
+
+  const deleteChildMutation = useMutation({
+    mutationFn: (id) => childrenApi.remove(id),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["children"] });
+      setSelectedChild(null); // авто-выбор первого оставшегося
+      toast.success(t("toast.deleted"));
+    },
+    onError: () => toast.error(t("toast.error")),
+  });
+
+  const confirmDeleteChild = () => {
+    if (selectedChild && window.confirm(`${t("common.delete")}: ${selectedChild.name}?`)) {
+      deleteChildMutation.mutate(selectedChild.id);
+    }
+  };
 
   const scheduleQuery = useQuery({
     queryKey: ["schedule", childId, today()],
@@ -60,12 +83,28 @@ export default function Dashboard() {
             </span>
           </h1>
           {selectedChild && (
-            <p className="mt-1 text-text-secondary">
-              {selectedChild.name} · {selectedChild.age || "—"}{" "}
-              <Badge tone="primary" className="ml-1">
+            <div className="mt-1 flex flex-wrap items-center gap-2 text-text-secondary">
+              <span>
+                {selectedChild.name} · {selectedChild.age || "—"}
+              </span>
+              <Badge tone="primary">
                 {t(`children.level.${selectedChild.communication_level}`)}
               </Badge>
-            </p>
+              <button
+                onClick={() => setEditOpen(true)}
+                title={t("common.edit")}
+                className="rounded-lg p-1.5 text-text-secondary transition-colors hover:bg-white/10 hover:text-text-primary"
+              >
+                <Pencil className="h-4 w-4" />
+              </button>
+              <button
+                onClick={confirmDeleteChild}
+                title={t("common.delete")}
+                className="rounded-lg p-1.5 text-text-secondary transition-colors hover:bg-white/10 hover:text-text-primary"
+              >
+                <Trash2 className="h-4 w-4" />
+              </button>
+            </div>
           )}
         </div>
         {childId && (
@@ -77,6 +116,12 @@ export default function Dashboard() {
           </Link>
         )}
       </div>
+
+      <ChildForm
+        open={editOpen}
+        child={selectedChild}
+        onClose={() => setEditOpen(false)}
+      />
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Mood chart */}

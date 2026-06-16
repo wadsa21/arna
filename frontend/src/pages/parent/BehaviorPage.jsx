@@ -1,15 +1,19 @@
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
+import toast from "react-hot-toast";
+import { FileDown } from "lucide-react";
 
 import Card from "../../components/ui/Card";
+import Button from "../../components/ui/Button";
 import { SkeletonList } from "../../components/ui/Skeleton";
 import MoodChart from "../../components/parent/MoodChart";
 import BehaviorForm from "../../components/parent/BehaviorForm";
+import BehaviorInsights from "../../components/parent/BehaviorInsights";
 import EmptyChild from "../../components/parent/EmptyChild";
 import UpgradePrompt from "../../components/billing/UpgradePrompt";
 import { useChildren, toList } from "../../hooks/useChildren";
-import { behaviorApi } from "../../services/api";
+import { behaviorApi, childrenApi } from "../../services/api";
 import { useSubscriptionStore } from "../../store/subscriptionStore";
 
 const MOOD_EMOJI = { 1: "😣", 2: "🙁", 3: "😐", 4: "🙂", 5: "😄" };
@@ -20,6 +24,17 @@ export default function BehaviorPage() {
   const childId = selectedChild?.id;
   const isFeatureAvailable = useSubscriptionStore((s) => s.isFeatureAvailable);
   const hasBehavior = isFeatureAvailable("has_behavior_log");
+  const hasPdf = isFeatureAvailable("has_pdf_export");
+
+  const openReport = async () => {
+    try {
+      const { data } = await childrenApi.report(childId);
+      const url = URL.createObjectURL(new Blob([data], { type: "text/html" }));
+      window.open(url, "_blank");
+    } catch {
+      toast.error(t("toast.error"));
+    }
+  };
 
   const logsQuery = useQuery({
     queryKey: ["behavior", childId],
@@ -45,7 +60,14 @@ export default function BehaviorPage() {
 
   return (
     <div className="mx-auto max-w-6xl space-y-6">
-      <h1 className="text-3xl font-extrabold gradient-text">{t("behavior.title")}</h1>
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <h1 className="text-3xl font-extrabold gradient-text">{t("behavior.title")}</h1>
+        {hasPdf && (
+          <Button variant="ghost" onClick={openReport}>
+            <FileDown className="h-4 w-4" /> {t("behavior.export")}
+          </Button>
+        )}
+      </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <BehaviorForm childId={childId} />
@@ -61,6 +83,8 @@ export default function BehaviorPage() {
           )}
         </Card>
       </div>
+
+      <BehaviorInsights childId={childId} />
 
       <Card>
         <h2 className="mb-4 text-lg font-bold">{t("behavior.history")}</h2>

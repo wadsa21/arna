@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { Bell } from "lucide-react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { Bell, CheckCheck } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { notificationsApi } from "../../services/api";
 import { toList } from "../../hooks/useChildren";
 
 export default function NotificationBell() {
   const [open, setOpen] = useState(false);
+  const qc = useQueryClient();
 
   const { data } = useQuery({
     queryKey: ["notifications"],
@@ -16,6 +17,23 @@ export default function NotificationBell() {
 
   const items = data ?? [];
   const unread = items.filter((n) => !n.is_read).length;
+
+  const readMutation = useMutation({
+    mutationFn: (id) => notificationsApi.markRead(id),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["notifications"] }),
+  });
+
+  const readAllMutation = useMutation({
+    mutationFn: () =>
+      Promise.all(
+        items.filter((n) => !n.is_read).map((n) => notificationsApi.markRead(n.id))
+      ),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["notifications"] }),
+  });
+
+  const onItemClick = (n) => {
+    if (!n.is_read) readMutation.mutate(n.id);
+  };
 
   return (
     <div className="relative">
@@ -37,26 +55,37 @@ export default function NotificationBell() {
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
-            className="glass-card absolute right-0 z-50 mt-2 w-80 max-h-96 overflow-y-auto p-3"
+            className="glass-card absolute right-0 z-50 mt-2 max-h-96 w-80 overflow-y-auto p-3"
           >
-            <p className="mb-2 px-2 text-sm font-bold text-text-secondary">
-              Уведомления
-            </p>
+            <div className="mb-2 flex items-center justify-between px-2">
+              <p className="text-sm font-bold text-text-secondary">Уведомления</p>
+              {unread > 0 && (
+                <button
+                  onClick={() => readAllMutation.mutate()}
+                  className="flex items-center gap-1 text-xs font-semibold text-text-secondary hover:text-text-primary"
+                >
+                  <CheckCheck className="h-3.5 w-3.5" /> Прочитать все
+                </button>
+              )}
+            </div>
             {items.length === 0 && (
               <p className="px-2 py-6 text-center text-sm text-text-secondary">
                 Пока тихо
               </p>
             )}
             {items.map((n) => (
-              <div
+              <button
                 key={n.id}
-                className={`rounded-2xl p-3 mb-1.5 ${
-                  n.is_read ? "bg-white/5" : "border border-white/25 bg-white/10"
+                onClick={() => onItemClick(n)}
+                className={`mb-1.5 block w-full rounded-2xl p-3 text-left transition-colors ${
+                  n.is_read
+                    ? "bg-white/5"
+                    : "border border-white/25 bg-white/10 hover:bg-white/15"
                 }`}
               >
                 <p className="text-sm font-semibold text-text-primary">{n.title}</p>
                 <p className="text-xs text-text-secondary">{n.body}</p>
-              </div>
+              </button>
             ))}
           </motion.div>
         )}

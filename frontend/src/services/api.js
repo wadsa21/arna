@@ -74,6 +74,7 @@ export const childrenApi = {
   create: (payload) => api.post("/children/", payload),
   update: (id, payload) => api.patch(`/children/${id}/`, payload),
   remove: (id) => api.delete(`/children/${id}/`),
+  report: (id) => api.get(`/children/${id}/report/`, { responseType: "text" }),
 };
 
 export const scheduleApi = {

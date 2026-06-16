@@ -22,8 +22,9 @@ export const useSubscriptionStore = create((set, get) => ({
   usage: { children: 0, cards: 0 },
   loading: false,
 
-  // глобальная модалка апгрейда
+  // глобальная модалка апгрейда + анти-спам
   upgrade: { open: false, requiredPlan: null, currentPlan: null, message: "" },
+  _upgradeCooldownUntil: 0,
 
   /** Доступна ли фича плана (например "has_behavior_log", "has_ai"). */
   isFeatureAvailable(feature) {
@@ -55,17 +56,24 @@ export const useSubscriptionStore = create((set, get) => ({
   },
 
   openUpgrade({ requiredPlan, currentPlan, message } = {}) {
+    const s = get();
+    // Не спамим: пропускаем, если уже открыта или идёт период «тишины»
+    if (s.upgrade.open || Date.now() < s._upgradeCooldownUntil) return;
     set({
       upgrade: {
         open: true,
         requiredPlan: requiredPlan || "OTBASY",
-        currentPlan: currentPlan || get().currentPlan,
+        currentPlan: currentPlan || s.currentPlan,
         message: message || "",
       },
     });
   },
 
   closeUpgrade() {
-    set((s) => ({ upgrade: { ...s.upgrade, open: false } }));
+    // После закрытия — 5 минут тишины, чтобы реклама не выскакивала снова
+    set((st) => ({
+      upgrade: { ...st.upgrade, open: false },
+      _upgradeCooldownUntil: Date.now() + 5 * 60 * 1000,
+    }));
   },
 }));

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Reorder, useDragControls } from "framer-motion";
 import toast from "react-hot-toast";
-import { Plus, GripVertical, Trash2, Copy, Clock } from "lucide-react";
+import { Plus, GripVertical, Trash2, Copy, Clock, Pencil } from "lucide-react";
 
 import Card from "../../components/ui/Card";
 import Button from "../../components/ui/Button";
@@ -25,7 +25,7 @@ const STATUS_TONE = {
   SKIPPED: "danger",
 };
 
-function ScheduleRow({ item, lang, t, onStatus, onDelete }) {
+function ScheduleRow({ item, lang, t, onStatus, onDelete, onEdit }) {
   const controls = useDragControls();
   return (
     <Reorder.Item
@@ -65,6 +65,13 @@ function ScheduleRow({ item, lang, t, onStatus, onDelete }) {
         {t(`schedule.status.${item.status}`)}
       </Badge>
       <button
+        onClick={() => onEdit(item)}
+        title={t("common.edit")}
+        className="rounded-xl p-2 text-text-secondary hover:bg-white/10 hover:text-text-primary"
+      >
+        <Pencil className="h-4 w-4" />
+      </button>
+      <button
         onClick={() => onDelete(item)}
         className="rounded-xl p-2 text-text-secondary hover:bg-white hover:text-black"
       >
@@ -86,6 +93,7 @@ export default function SchedulePage() {
   const [addOpen, setAddOpen] = useState(false);
   const [copyOpen, setCopyOpen] = useState(false);
   const [copyDate, setCopyDate] = useState("");
+  const [editItem, setEditItem] = useState(null);
 
   const scheduleQuery = useQuery({
     queryKey: ["schedule", childId, date],
@@ -125,6 +133,17 @@ export default function SchedulePage() {
     mutationFn: ({ item, status }) =>
       scheduleApi.updateItem(item.id, { status }),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["schedule", childId, date] }),
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: (payload) => scheduleApi.updateItem(editItem.id, payload),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["schedule", childId, date] });
+      toast.success(t("toast.saved"));
+      setAddOpen(false);
+      setEditItem(null);
+    },
+    onError: () => toast.error(t("toast.error")),
   });
 
   const deleteMutation = useMutation({
@@ -180,7 +199,12 @@ export default function SchedulePage() {
                 <Copy className="h-4 w-4" /> {t("schedule.copy_to")}
               </Button>
             )}
-            <Button onClick={() => setAddOpen(true)}>
+            <Button
+              onClick={() => {
+                setEditItem(null);
+                setAddOpen(true);
+              }}
+            >
               <Plus className="h-5 w-5" /> {t("schedule.add_activity")}
             </Button>
           </div>
@@ -203,6 +227,10 @@ export default function SchedulePage() {
                 t={t}
                 onStatus={(it, status) => statusMutation.mutate({ item: it, status })}
                 onDelete={(it) => deleteMutation.mutate(it)}
+                onEdit={(it) => {
+                  setEditItem(it);
+                  setAddOpen(true);
+                }}
               />
             ))}
           </Reorder.Group>
@@ -213,9 +241,19 @@ export default function SchedulePage() {
 
       <ScheduleItemForm
         open={addOpen}
-        onClose={() => setAddOpen(false)}
-        loading={addMutation.isPending}
-        onSubmit={(form, reset) => addMutation.mutate(form, { onSuccess: reset })}
+        item={editItem}
+        loading={addMutation.isPending || updateMutation.isPending}
+        onClose={() => {
+          setAddOpen(false);
+          setEditItem(null);
+        }}
+        onSubmit={(form, reset) => {
+          if (editItem) {
+            updateMutation.mutate(form);
+          } else {
+            addMutation.mutate(form, { onSuccess: reset });
+          }
+        }}
       />
 
       <Modal open={copyOpen} onClose={() => setCopyOpen(false)} title={t("schedule.copy_to")}>

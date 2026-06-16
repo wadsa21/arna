@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
@@ -12,10 +12,11 @@ import { cardsApi } from "../../services/api";
 
 const CATEGORIES = ["NEEDS", "EMOTIONS", "ACTIONS", "FOOD", "PLACES"];
 
-export default function CardForm({ open, onClose, childId }) {
+export default function CardForm({ open, onClose, childId, card = null }) {
   const { t } = useTranslation();
   const qc = useQueryClient();
   const fileRef = useRef();
+  const isEdit = !!card;
   const [form, setForm] = useState({
     title_ru: "",
     title_kk: "",
@@ -24,6 +25,20 @@ export default function CardForm({ open, onClose, childId }) {
   });
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
+
+  // Префилл при редактировании
+  useEffect(() => {
+    if (open && card) {
+      setForm({
+        title_ru: card.title_ru || "",
+        title_kk: card.title_kk || "",
+        emoji: card.emoji || "🗣️",
+        category: card.category || "NEEDS",
+      });
+      setImage(null);
+      setPreview(card.image || null);
+    }
+  }, [open, card]);
 
   const reset = () => {
     setForm({ title_ru: "", title_kk: "", emoji: "🗣️", category: "NEEDS" });
@@ -37,11 +52,11 @@ export default function CardForm({ open, onClose, childId }) {
       fd.append("child", childId);
       Object.entries(form).forEach(([k, v]) => fd.append(k, v));
       if (image) fd.append("image", image);
-      return cardsApi.create(fd);
+      return isEdit ? cardsApi.update(card.id, fd) : cardsApi.create(fd);
     },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["cards"] });
-      toast.success(t("toast.created"));
+      toast.success(isEdit ? t("toast.saved") : t("toast.created"));
       reset();
       onClose();
     },
@@ -56,7 +71,7 @@ export default function CardForm({ open, onClose, childId }) {
   };
 
   return (
-    <Modal open={open} onClose={onClose} title={t("cards.new_card")}>
+    <Modal open={open} onClose={onClose} title={isEdit ? t("common.edit") : t("cards.new_card")}>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -143,7 +158,7 @@ export default function CardForm({ open, onClose, childId }) {
             {t("common.cancel")}
           </Button>
           <Button type="submit" loading={mutation.isPending}>
-            {t("common.create")}
+            {isEdit ? t("common.save") : t("common.create")}
           </Button>
         </div>
       </form>

@@ -50,7 +50,9 @@
     "no_account": "Аккаунт жоқ па?",
     "have_account": "Аккаунт бар ма?",
     "login_error": "Email немесе құпиясөз қате",
-    "register_error": "Тіркелу мүмкін болмады"
+    "register_error": "Тіркелу мүмкін болмады",
+    "profile": "Профиль",
+    "profile_subtitle": "Аты, интерфейс тілі және аккаунт"
   },
   "nav": {
     "dashboard": "Шолу",
@@ -111,6 +113,16 @@
     "positive": "Жағымды сәттер",
     "month_chart": "Айлық көңіл-күй",
     "history": "Жазбалар тарихы",
+    "insights_title": "Мінез-құлықты ИИ-талдау",
+    "insights_locked": "Үлгілерді талдау және ұсыныстар PRO тарифінде қолжетімді",
+    "avg_mood": "Орташа",
+    "trend": "Трен",
+    "trend_improving": "Өсуде",
+    "trend_declining": "Төмендеуде",
+    "trend_stable": "Тұрақты",
+    "streak": "Қатарынан жақсы күн",
+    "recommendations": "Ұсыныстар",
+    "export": "Есепті экспорттау",
     "mood_labels": {
       "1": "Өте нашар",
       "2": "Нашар",

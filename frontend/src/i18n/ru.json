@@ -50,7 +50,9 @@
     "no_account": "Нет аккаунта?",
     "have_account": "Уже есть аккаунт?",
     "login_error": "Неверный email или пароль",
-    "register_error": "Не удалось зарегистрироваться"
+    "register_error": "Не удалось зарегистрироваться",
+    "profile": "Профиль",
+    "profile_subtitle": "Имя, язык интерфейса и аккаунт"
   },
   "nav": {
     "dashboard": "Обзор",
@@ -111,6 +113,16 @@
     "positive": "Позитивные моменты",
     "month_chart": "Настроение за месяц",
     "history": "История записей",
+    "insights_title": "ИИ-анализ поведения",
+    "insights_locked": "Анализ паттернов и рекомендации доступны на тарифе PRO",
+    "avg_mood": "Среднее",
+    "trend": "Тренд",
+    "trend_improving": "Растёт",
+    "trend_declining": "Снижается",
+    "trend_stable": "Стабильно",
+    "streak": "Хороших дней подряд",
+    "recommendations": "Рекомендации",
+    "export": "Экспорт отчёта",
     "mood_labels": {
       "1": "Очень плохо",
       "2": "Плохо",

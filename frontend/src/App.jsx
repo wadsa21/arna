@@ -12,6 +12,7 @@ import SchedulePage from "./pages/parent/SchedulePage";
 import CardsPage from "./pages/parent/CardsPage";
 import BehaviorPage from "./pages/parent/BehaviorPage";
 import SubscriptionSettings from "./pages/parent/SubscriptionSettings";
+import ProfileSettings from "./pages/parent/ProfileSettings";
 import ChildView from "./pages/child/ChildView";
 import Pricing from "./pages/Pricing";
 import Checkout from "./pages/Checkout";
@@ -85,6 +86,7 @@ export default function App() {
           }
         >
           <Route path="subscription" element={<SubscriptionSettings />} />
+          <Route path="profile" element={<ProfileSettings />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

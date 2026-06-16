@@ -1,35 +1,46 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
 import { Input } from "../ui/Input";
 import EmojiPicker from "../ui/EmojiPicker";
 
-export default function ScheduleItemForm({ open, onClose, onSubmit, loading }) {
+const EMPTY = {
+  title_ru: "",
+  title_kk: "",
+  emoji: "📌",
+  start_time: "09:00",
+  duration_minutes: 30,
+};
+
+export default function ScheduleItemForm({ open, onClose, onSubmit, loading, item = null }) {
   const { t } = useTranslation();
-  const [form, setForm] = useState({
-    title_ru: "",
-    title_kk: "",
-    emoji: "📌",
-    start_time: "09:00",
-    duration_minutes: 30,
-  });
+  const isEdit = !!item;
+  const [form, setForm] = useState(EMPTY);
+
+  useEffect(() => {
+    if (open) {
+      setForm(
+        item
+          ? {
+              title_ru: item.title_ru || "",
+              title_kk: item.title_kk || "",
+              emoji: item.emoji || "📌",
+              start_time: (item.start_time || "09:00").slice(0, 5),
+              duration_minutes: item.duration_minutes || 30,
+            }
+          : EMPTY
+      );
+    }
+  }, [open, item]);
 
   const submit = (e) => {
     e.preventDefault();
-    onSubmit(form, () =>
-      setForm({
-        title_ru: "",
-        title_kk: "",
-        emoji: "📌",
-        start_time: "09:00",
-        duration_minutes: 30,
-      })
-    );
+    onSubmit(form, () => setForm(EMPTY));
   };
 
   return (
-    <Modal open={open} onClose={onClose} title={t("schedule.add_activity")}>
+    <Modal open={open} onClose={onClose} title={isEdit ? t("common.edit") : t("schedule.add_activity")}>
       <form onSubmit={submit} className="space-y-4">
         <div className="flex items-center gap-4">
           <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-white/20 bg-white text-3xl text-black shadow-neon-primary">
@@ -80,7 +91,7 @@ export default function ScheduleItemForm({ open, onClose, onSubmit, loading }) {
             {t("common.cancel")}
           </Button>
           <Button type="submit" loading={loading}>
-            {t("common.add")}
+            {isEdit ? t("common.save") : t("common.add")}
           </Button>
         </div>
       </form>

@@ -52,9 +52,13 @@ export default function Header({ children = [], selectedChildId }) {
         <LanguageSwitcher />
         <NotificationBell />
         <div className="hidden items-center gap-2 rounded-2xl border border-white/10 bg-black/40 py-1.5 pl-3 pr-1.5 sm:flex">
-          <span className="text-sm font-semibold text-text-primary max-w-32 truncate">
+          <Link
+            to="/settings/profile"
+            title={t("auth.profile")}
+            className="max-w-32 truncate text-sm font-semibold text-text-primary hover:underline"
+          >
             {user?.full_name || user?.email}
-          </span>
+          </Link>
           <button
             onClick={handleLogout}
             title={t("common.logout")}
