@@ -8,6 +8,7 @@ import { ChevronDown, ArrowLeft } from "lucide-react";
 import AnimatedBackground from "../components/ui/AnimatedBackground";
 import LanguageSwitcher from "../components/ui/LanguageSwitcher";
 import { Skeleton } from "../components/ui/Skeleton";
+import Logo from "../components/ui/Logo";
 import PlanCard from "../components/billing/PlanCard";
 import { billingApi } from "../services/api";
 import { useAuthStore } from "../store/authStore";
@@ -80,10 +81,9 @@ export default function Pricing() {
       <AnimatedBackground />
 
       <header className="flex items-center justify-between px-5 py-5 lg:px-12">
-        <Link to={token ? "/parent/dashboard" : "/"} className="flex items-center gap-2 text-text-secondary hover:text-text-primary">
+        <Link to={token ? "/parent/dashboard" : "/"} className="flex items-center gap-2.5 text-text-secondary hover:text-text-primary">
           <ArrowLeft className="h-5 w-5" />
-          <span className="text-2xl">🌈</span>
-          <span className="text-xl font-extrabold gradient-text">{t("brand")}</span>
+          <Logo size={34} />
         </Link>
         <LanguageSwitcher />
       </header>

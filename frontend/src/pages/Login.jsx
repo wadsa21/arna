@@ -8,6 +8,7 @@ import { Mail, Lock } from "lucide-react";
 import AnimatedBackground from "../components/ui/AnimatedBackground";
 import LanguageSwitcher from "../components/ui/LanguageSwitcher";
 import Button from "../components/ui/Button";
+import Logo from "../components/ui/Logo";
 import { Input } from "../components/ui/Input";
 import { authApi } from "../services/api";
 import { useAuthStore } from "../store/authStore";
@@ -49,11 +50,8 @@ export default function Login() {
         transition={{ duration: 0.4 }}
         className="glass-card neon-glow w-full max-w-md p-8"
       >
-        <Link to="/" className="mb-6 flex items-center justify-center gap-2">
-          <span className="text-4xl">🌈</span>
-          <span className="text-3xl font-extrabold gradient-text">
-            {t("brand")}
-          </span>
+        <Link to="/" className="mb-6 flex justify-center">
+          <Logo size={52} />
         </Link>
         <h1 className="mb-1 text-center text-2xl font-bold">
           {t("auth.welcome_back")}

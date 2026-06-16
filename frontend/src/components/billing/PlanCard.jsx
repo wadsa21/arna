@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Check, X, Clock, Crown } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { planFeatureRows, PLAN_GRADIENTS, PLAN_EMOJI } from "./planFeatures";
+import { planFeatureRows, PLAN_GRADIENTS, PLAN_ICON } from "./planFeatures";
 
 const StatusIcon = ({ status }) => {
   if (status === "yes") return <Check className="h-4 w-4 shrink-0 text-accent2" />;
@@ -16,6 +16,7 @@ export default function PlanCard({ plan, billingCycle, currentPlan, onSelect, in
   const rows = planFeatureRows(plan, t);
   const isCurrent = currentPlan === plan.name;
   const featured = plan.is_featured;
+  const Icon = PLAN_ICON[plan.name] || PLAN_ICON.FREE;
 
   const priceBlock = () => {
     if (plan.is_contact_sales)
@@ -53,9 +54,9 @@ export default function PlanCard({ plan, billingCycle, currentPlan, onSelect, in
       )}
 
       <div
-        className={`mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${PLAN_GRADIENTS[plan.name]} text-3xl`}
+        className={`mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${PLAN_GRADIENTS[plan.name]} text-white shadow-lg`}
       >
-        {PLAN_EMOJI[plan.name]}
+        <Icon className="h-7 w-7" />
       </div>
 
       <h3 className="text-xl font-extrabold">{t(`billing.plans.${plan.name}`)}</h3>

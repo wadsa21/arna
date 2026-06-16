@@ -16,6 +16,7 @@ import {
 import AnimatedBackground from "../components/ui/AnimatedBackground";
 import LanguageSwitcher from "../components/ui/LanguageSwitcher";
 import Button from "../components/ui/Button";
+import Logo from "../components/ui/Logo";
 
 const DEMO_CARDS = ["💧", "🍎", "😄", "🧸", "🏠", "🚽"];
 const DEMO_SCHEDULE = [
@@ -62,12 +63,7 @@ export default function Landing() {
 
       {/* Nav */}
       <header className="flex items-center justify-between px-5 py-5 lg:px-12">
-        <div className="flex items-center gap-2">
-          <span className="text-3xl">🌈</span>
-          <span className="text-2xl font-extrabold gradient-text">
-            {t("brand")}
-          </span>
-        </div>
+        <Logo size={42} />
         <div className="flex items-center gap-3">
           <Link
             to="/pricing"
@@ -248,8 +244,9 @@ export default function Landing() {
         </motion.div>
       </section>
 
-      <footer className="py-10 text-center text-sm text-text-secondary">
-        🌈 {t("brand")} — {t("landing.made_with")}
+      <footer className="flex flex-col items-center gap-3 py-10 text-center text-sm text-text-secondary">
+        <Logo size={32} />
+        <span>{t("landing.made_with")}</span>
       </footer>
     </div>
   );

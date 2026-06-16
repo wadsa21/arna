@@ -9,6 +9,7 @@ import {
   Baby,
   Sparkles,
 } from "lucide-react";
+import Logo from "../ui/Logo";
 
 const NAV = [
   { to: "/parent/dashboard", icon: LayoutDashboard, key: "dashboard" },
@@ -24,10 +25,7 @@ export default function Sidebar({ childId }) {
     <aside className="hidden lg:flex w-64 shrink-0 flex-col gap-3 p-4">
       {/* Бренд */}
       <div className="glass-card flex items-center gap-3 p-4">
-        <div className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-brand text-2xl shadow-neon-primary">
-          🌈
-          <span className="absolute -right-0.5 -top-0.5 h-3 w-3 rounded-full border-2 border-surface bg-accent2" />
-        </div>
+        <Logo size={44} showWord={false} />
         <div>
           <p className="text-lg font-extrabold gradient-text leading-none">
             {t("brand")}

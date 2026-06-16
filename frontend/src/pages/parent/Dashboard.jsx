@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-import { CalendarDays, Baby, Sparkles, TrendingUp } from "lucide-react";
+import { CalendarDays, Baby, Sparkles, TrendingUp, MessageSquareHeart } from "lucide-react";
 
 import Card from "../../components/ui/Card";
 import Button from "../../components/ui/Button";
@@ -56,7 +56,7 @@ export default function Dashboard() {
         <div>
           <h1 className="text-3xl font-extrabold">
             <span className="gradient-text">
-              {t("dashboard.greeting", { name: user?.full_name?.split(" ")[0] || "👋" })}
+              {t("dashboard.greeting", { name: user?.full_name?.split(" ")[0] || user?.email?.split("@")[0] || "" })}
             </span>
           </h1>
           {selectedChild && (
@@ -151,7 +151,7 @@ export default function Dashboard() {
               label={t("billing.usage_cards")}
               used={subscription.usage.cards}
               limit={subscription.plan.max_cards}
-              icon="🗣️"
+              icon={<MessageSquareHeart className="h-4 w-4" />}
             />
           </div>
         </Card>

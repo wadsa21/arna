@@ -36,6 +36,8 @@ export function planFeatureRows(plan, t) {
   return rows;
 }
 
+import { Sparkles, Home, Crown, Building2 } from "lucide-react";
+
 export const PLAN_GRADIENTS = {
   FREE: "from-slate-500 to-slate-600",
   OTBASY: "from-primary to-accent1",
@@ -43,9 +45,10 @@ export const PLAN_GRADIENTS = {
   ENTERPRISE: "from-accent3 to-accent4",
 };
 
-export const PLAN_EMOJI = {
-  FREE: "🌱",
-  OTBASY: "🏡",
-  PRO: "👑",
-  ENTERPRISE: "🏢",
+/** Иконки тарифов (Lucide) вместо эмодзи. */
+export const PLAN_ICON = {
+  FREE: Sparkles,
+  OTBASY: Home,
+  PRO: Crown,
+  ENTERPRISE: Building2,
 };

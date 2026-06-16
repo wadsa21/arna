@@ -44,7 +44,7 @@ export default function NotificationBell() {
             </p>
             {items.length === 0 && (
               <p className="px-2 py-6 text-center text-sm text-text-secondary">
-                Пока тихо 🌙
+                Пока тихо
               </p>
             )}
             {items.map((n) => (

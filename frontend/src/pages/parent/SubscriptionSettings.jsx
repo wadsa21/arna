@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { Crown, Baby, MessageSquareHeart, Sparkles, Copy, Gift, XCircle } from "lucide-react";
+import { Baby, MessageSquareHeart, Sparkles, Copy, Gift, XCircle } from "lucide-react";
 
 import Card from "../../components/ui/Card";
 import Button from "../../components/ui/Button";
@@ -11,6 +11,7 @@ import Badge from "../../components/ui/Badge";
 import { SkeletonList } from "../../components/ui/Skeleton";
 import PlanBadge from "../../components/billing/PlanBadge";
 import UsageMeter from "../../components/billing/UsageMeter";
+import { PLAN_ICON, PLAN_GRADIENTS } from "../../components/billing/planFeatures";
 import { billingApi } from "../../services/api";
 import { useSubscriptionStore } from "../../store/subscriptionStore";
 
@@ -72,8 +73,13 @@ export default function SubscriptionSettings() {
       <Card glow>
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-brand text-3xl shadow-neon-primary">
-              {plan.name === "PRO" || plan.name === "ENTERPRISE" ? <Crown className="h-8 w-8 text-white" /> : "🏡"}
+            <div
+              className={`flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br ${PLAN_GRADIENTS[plan.name]} text-white shadow-neon-primary`}
+            >
+              {(() => {
+                const Icon = PLAN_ICON[plan.name] || PLAN_ICON.FREE;
+                return <Icon className="h-8 w-8" />;
+              })()}
             </div>
             <div>
               <div className="flex items-center gap-2">

@@ -4,7 +4,7 @@ import { Sparkles, ArrowRight } from "lucide-react";
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
 import { useSubscriptionStore } from "../../store/subscriptionStore";
-import { PLAN_EMOJI } from "./planFeatures";
+import { PLAN_ICON, PLAN_GRADIENTS } from "./planFeatures";
 
 /** Глобальная модалка апгрейда — открывается автоматически при 403 upgrade_required. */
 export default function UpgradeModal() {
@@ -15,6 +15,7 @@ export default function UpgradeModal() {
 
   const plan = upgrade.requiredPlan || "OTBASY";
   const planLabel = t(`billing.plans.${plan}`);
+  const Icon = PLAN_ICON[plan] || PLAN_ICON.OTBASY;
 
   const goCheckout = () => {
     close();
@@ -28,8 +29,10 @@ export default function UpgradeModal() {
   return (
     <Modal open={upgrade.open} onClose={close} title="">
       <div className="flex flex-col items-center gap-4 text-center">
-        <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-brand text-5xl shadow-neon-primary">
-          {PLAN_EMOJI[plan] || "✨"}
+        <div
+          className={`flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br ${PLAN_GRADIENTS[plan]} text-white shadow-neon-primary`}
+        >
+          <Icon className="h-10 w-10" />
         </div>
         <h3 className="text-2xl font-bold gradient-text">
           {t("billing.upgrade_title", { plan: planLabel })}

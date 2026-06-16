@@ -5,19 +5,19 @@ import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import confetti from "canvas-confetti";
 import toast from "react-hot-toast";
-import { ArrowLeft, CreditCard, Check, Tag } from "lucide-react";
+import { ArrowLeft, CreditCard, Check, Tag, Smartphone } from "lucide-react";
 
 import AnimatedBackground from "../components/ui/AnimatedBackground";
 import Button from "../components/ui/Button";
 import { Skeleton } from "../components/ui/Skeleton";
 import { billingApi } from "../services/api";
 import { useSubscriptionStore } from "../store/subscriptionStore";
-import { PLAN_EMOJI } from "../components/billing/planFeatures";
+import { PLAN_ICON, PLAN_GRADIENTS } from "../components/billing/planFeatures";
 
 const fmt = (v) => Number(v).toLocaleString("ru-RU");
 const METHODS = [
-  { value: "KASPI", label: "Kaspi Pay", emoji: "🔴" },
-  { value: "CARD", label: "Visa / Mastercard", emoji: "💳" },
+  { value: "KASPI", label: "Kaspi Pay", icon: Smartphone },
+  { value: "CARD", label: "Visa / Mastercard", icon: CreditCard },
 ];
 
 export default function Checkout() {
@@ -98,8 +98,13 @@ export default function Checkout() {
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="glass-card neon-glow p-6">
             {/* Выбранный план */}
             <div className="mb-5 flex items-center gap-4 rounded-2xl bg-surface2/60 p-4">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-brand text-3xl">
-                {PLAN_EMOJI[plan.name]}
+              <div
+                className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${PLAN_GRADIENTS[plan.name]} text-white`}
+              >
+                {(() => {
+                  const Icon = PLAN_ICON[plan.name] || PLAN_ICON.FREE;
+                  return <Icon className="h-7 w-7" />;
+                })()}
               </div>
               <div>
                 <p className="text-lg font-bold">{t(`billing.plans.${plan.name}`)}</p>
@@ -127,19 +132,22 @@ export default function Checkout() {
               {t("billing.payment_method")}
             </p>
             <div className="mb-5 grid grid-cols-2 gap-3">
-              {METHODS.map((m) => (
-                <button
-                  key={m.value}
-                  onClick={() => setMethod(m.value)}
-                  className={`flex items-center justify-center gap-2 rounded-2xl border p-3 text-sm font-semibold transition-all ${
-                    method === m.value
-                      ? "border-primary bg-primary/15 shadow-neon-primary"
-                      : "border-white/10 bg-surface2/40 hover:bg-white/5"
-                  }`}
-                >
-                  <span>{m.emoji}</span> {m.label}
-                </button>
-              ))}
+              {METHODS.map((m) => {
+                const Icon = m.icon;
+                return (
+                  <button
+                    key={m.value}
+                    onClick={() => setMethod(m.value)}
+                    className={`flex items-center justify-center gap-2 rounded-2xl border p-3 text-sm font-semibold transition-all ${
+                      method === m.value
+                        ? "border-primary bg-primary/15 shadow-neon-primary"
+                        : "border-white/10 bg-surface2/40 hover:bg-white/5"
+                    }`}
+                  >
+                    <Icon className="h-4 w-4" /> {m.label}
+                  </button>
+                );
+              })}
             </div>
 
             {/* Реферальный код */}
